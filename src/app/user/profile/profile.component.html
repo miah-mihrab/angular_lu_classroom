@@ -1,0 +1,104 @@
+<h1 class="heading-secondary text-center mt-5">Account Settings</h1>
+<div class="acnt_container " style="min-height: 50vh;">
+    <div class="side-menu">
+        <ul class="items" style="margin:0; padding:10px 20px">
+            <li class="nav_el"><i class="fas fa-home"></i><a [routerLink]="['']"> Home</a></li>
+            <li class="nav_el"><i class="fas fa-user-cog"></i><a href="/account/userID"> Settings</a></li>
+            <li class="nav_el"><i class="fas fa-user-cog"></i><a href="" id="edit-profile"> Edit Profile</a></li>
+            <hr style="width:100px">
+            <div class="dropdown">
+                <li class="nav_el dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown">
+                    <i class="fas fa-book-open"></i><a href=""></a> Digital Library </li>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" target="_blank" href="https://dl.acm.org/">ACM Digital Library</a>
+                    <a class="dropdown-item" target="_blank" href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEE
+                        Xplore</a>
+                    <a class="dropdown-item" target="_blank" href="https://dblp.uni-trier.de/">DBLP</a>
+                    <a class="dropdown-item" target="_blank" href="https://www.sciencedirect.com/">Science
+                        Direct</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <li class="nav_el dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown">
+                    <i class="fab fa-searchengin"></i><a href=""></a> Accademic Search Engine </li>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" target="_blank" href="https://scholar.google.com/">Google Scholar</a>
+                    <a class="dropdown-item" target="_blank" href="https://academic.microsoft.com/">Microsoft
+                        Academic</a>
+                    <a class="dropdown-item" target="_blank" href="https://www.base-search.net/">BASE</a>
+                    <a class="dropdown-item" target="_blank" href="https://core.ac.uk/">CORE</a>
+                    <a class="dropdown-item" target="_blank" href="https://www.science.gov/">Science.gov</a>
+                    <a class="dropdown-item" target="_blank" href="https://www.semanticscholar.org/">Semantic
+                        Scholar</a>
+                    <a class="dropdown-item" target="_blank" href="https://xueshu.baidu.com/">Baidu Scholar</a>
+                </div>
+            </div>
+
+            <li class="nav_el"><i class="fas fa-poll-h"></i><a href="/result/userID" id="results"> Results</a></li>
+            <li class="nav_el"><i class="fas fa-calendar-alt"></i><a href="/routine/userID"> Routine</a></li>
+
+        </ul>
+    </div>
+
+    <div class="personal__info">
+        <div class="overview_section mb-4">
+            <h4>Basic Information</h4>
+            <br><br>
+            <form action="" [formGroup]="userForm" class="ui form" *ngIf="!loading" style="overflow: hidden;">
+                <div class="field">
+                    <label>First Name</label>
+                    <input type="text" name="first-name" placeholder="First Name" formControlName="firstname">
+                </div>
+                <div class="field">
+                    <label>Last Name</label>
+                    <input type="text" name="last-name" placeholder="Last Name" formControlName="lastname">
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="text" name="last-name" placeholder="Last Name" formControlName="email">
+                </div>
+                <div class="field">
+                    <label>ID</label>
+                    <input type="text" name="last-name" placeholder="Last Name" formControlName="id">
+                </div>
+
+                <ng-container *ngIf="user['profession']==='Student'">
+                    <div class="field">
+                        <label>Batch</label>
+                        <input type="text" name="last-name" placeholder="Last Name" formControlName="batch">
+                    </div>
+                    <div class="field">
+                        <label>Section</label>
+                        <input type="text" name="last-name" placeholder="Last Name" formControlName="section">
+                    </div>
+                    <div class="field">
+                        <label>Semester</label>
+                        <input type="text" name="last-name" placeholder="Last Name" formControlName="semester">
+                    </div>
+                    <div class="field">
+                        <label>DOB</label>
+                        <input type="date" name="last-name" placeholder="Last Name" formControlName="dob">
+                    </div>
+                </ng-container>
+
+
+                <input type="file" (change)="imageChange($event)">
+                <ng-container *ngIf='!updating'>
+                    <button class="ui inverted green button float-right" (click)="updateUser()">Update</button>
+                </ng-container>
+                <ng-container *ngIf='updating'>
+                    <button class="ui inverted green loading button float-right">Loading</button>
+                </ng-container>
+
+
+
+            </form>
+        </div>
+        <hr>
+        <div class="password_portion mt-4">
+            <h4>Secret Information</h4>
+
+        </div>
+    </div>
+</div>

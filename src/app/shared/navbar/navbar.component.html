@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">LU Classroom</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <form class="form-inline my-2 my-lg-0 ml-auto mr-4">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" *ngIf="user['profession']==='Teacher'">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#createClassModal"
+                        id="create_class-btn">Create Class</a>
+                </li>
+                <li class="nav-item" *ngIf="user['profession']==='Student'">
+                    <a class="nav-link" href="#">Join Class</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+
+            </ul>
+        </form>
+
+        <ul class="navbar-nav" [routerLink]="['/profile', user['_id']]">
+            <span>
+                <img class="ui mini circular image" [src]="userphoto? 
+                        'data:image/jpg;base64,'+userphoto : 'https://www.w3schools.com/howto/img_avatar.png'">
+            </span>&nbsp;
+            <li class="nav-item">
+                <a class="nav-link">{{username}}</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>

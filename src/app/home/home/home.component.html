@@ -1,0 +1,62 @@
+<!-- NAVBAR -->
+<app-navbar [username]="username" [userphoto]="userphoto"></app-navbar>
+
+
+
+<!-- CONTENTS -->
+<ng-container *ngIf="classes.length===0">
+    <div class="ui placeholder segment" style="height: 100vh;">
+        <div class="ui icon header">
+            <i class="book icon"></i>
+            You did not create any class yet.
+        </div>
+        <div class="ui primary button" data-toggle="modal" data-target="#createClassModal" id="create_class-btn">Create
+            Class</div>
+    </div>
+</ng-container>
+<div class="ui container mt-5">
+    <div class="ui grid">
+        <ng-container *ngFor="let class of classes">
+            <class-card [class]="class"></class-card>
+        </ng-container>
+    </div>
+</div>
+
+
+<!-- CREATE CLASS -->
+<div class="modal fade" id="createClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: white;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createClassLabel">Create Class</h5>
+
+                <span class="close" data-dismiss="modal">&times;</span>
+
+            </div>
+            <div class="body">
+                <form action="" method="POST" class="p-3" [formGroup]="createClassForm">
+
+                    <div class="form-group">
+                        <label for="classname">Class Name (required)</label>
+                        <input type="text" class="form-control" name="classname" placeholder="Class Name"
+                            formControlName="classname">
+                    </div>
+                    <div class="form-group">
+                        <label for="section">Section</label>
+                        <input type="text" class="form-control" name="section" placeholder="Section"
+                            formControlName="section">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" class="form-control" name="subject" placeholder="Subject"
+                            formControlName="subject">
+                    </div>
+                    <button class="btn btn-primary" (click)="createClass()" data-dismiss="modal">Create</button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

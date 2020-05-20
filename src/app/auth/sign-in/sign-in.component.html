@@ -1,0 +1,32 @@
+<div id="LoginForm" style="min-height: 100vh;">
+
+</div>
+<div class="ui segment container" style="min-height: 80vh; top: 10vh;left: 180px; position: absolute;">
+    <h1 class="form-heading">login Form</h1>
+    <div class="login-form">
+        <div class="main-div">
+            <app-errors [message]="error!=''?error:''"></app-errors>
+            <div class="panel">
+                <h2>Login To Your Account</h2>
+                <p>Please enter your email and password</p>
+            </div>
+            <form id="Login" [formGroup]="credentials">
+                <div class="form-group">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email Address" name="email"
+                        formControlName="email" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password"
+                        name="password" formControlName="password" required>
+                </div>
+
+                <div class="forgot">
+                    <a href="">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary" (click)="signIn()">Login</button>
+
+            </form>
+        </div>
+    </div>
+</div>

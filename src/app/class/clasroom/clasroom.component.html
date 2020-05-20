@@ -1,0 +1,123 @@
+<div class="container p-5">
+    <div class="ui secondary pointing two column centered grid menu">
+        <a class="item" [routerLink]="['./classwork']" [routerLinkActive]="['active']">
+            Classwork
+        </a>
+        <a class="item" [routerLink]="['./students']" [routerLinkActive]="['active']">
+            Students
+        </a>
+    </div>
+
+</div>
+<ng-container *ngIf="!childrenRoute">
+    <div class="container classroom-container">
+        <div class="banner" *ngIf="classContent">
+            <div class="banner-body">
+                <div class="content">
+                    <div class="top-left">
+                        <h1>{{classContent.classname || 'No Class'}}</h1>
+                        <h3>{{classContent.section || 'No batch'}}</h3>
+                        <span>Room Code: {{classContent.classID || ' No Class ID'}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-foot">
+                <span><b>Subject: </b> </span>{{classContent.subjectname || 'No Course'}}<span></span><br>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5 mb-3">
+        <div class="ui grid">
+            <div class="row">
+                <div class="four wide column">
+                    <ul class="list-group">
+                        <li class="list-group-item disabled text-white"
+                            style="font-size: 1.5rem; font-weight:bolder; background-color: #F96E4C">All Students</li>
+
+                        <!-- 
+                        <ng-container *ngIf="students.length">
+                            <li class="list-group-item disabled" *ngFor="let students of students">{{student}}</li>
+                        </ng-container>
+                        <ng-container *ngIf="students.length===0">
+                            <li class="list-group-item disabled">No Student Enrolled</li>
+                        </ng-container> -->
+
+                    </ul>
+                </div>
+
+
+                <div class="twelve wide column">
+                    <form class="" id="classroomForm" style="overflow: hidden;">
+                        <div class="form-group">
+                            <label for="createPost" class="text-secondary" style="font-weight: 700;">Create Post</label>
+                            <textarea class="form-control" id="post" rows="3" [(ngModel)]="post" name="post"></textarea>
+                        </div>
+                        <button class="ui inverted primary button float-right" (click)="createPost()">Post</button>
+                    </form>
+
+                    <div class="allPosts">
+                        <ng-container *ngIf="classPosts">
+                            <div class="post" *ngFor="let post of classPosts">
+                                <div class="post-head">
+                                    <div class="ui grid">
+                                        <div class="two wide column">
+                                            <a class="avatar">
+                                                <img [src]="post.photo? 
+                        'data:image/jpg;base64,'+post.photo : 'https://semantic-ui.com/images/avatar/small/elliot.jpg'"
+                                                    style="width: 70%;">
+                                            </a>
+                                            <div class="content">
+                                                <a class="author">{{post.author}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="fourteen wide column">{{post.content}}</div>
+                                    </div>
+
+                                    <br><br>
+                                    <form action="" class="ui form">
+                                        <label for="">
+                                            Comments
+                                        </label>
+                                        <textarea name="" id="" rows="2" [(ngModel)]="comment"
+                                            name="comment"></textarea>
+                                        <br> <br>
+                                        <button class="ui green button" (click)="postComment(post._id)">Comment</button>
+                                    </form>
+                                </div>
+                                <ng-container *ngIf="post.comments">
+                                    <div class="ui comments">
+                                        <div class="comment" *ngFor="let comment of post.comments" style="width: 100%;">
+                                            <a class="avatar">
+                                                <img
+                                                    [src]="comment.photo? 
+                                                                        'data:image/jpg;base64,'+comment.photo : 'https://semantic-ui.com/images/avatar/small/elliot.jpg'">
+                                            </a>
+                                            <div class="content">
+
+                                                <a class="author">{{comment.author}}</a>
+                                                <div class="metadata">
+                                                    <div class="date">2 days ago</div>
+                                                </div>
+                                                <div class="text">
+                                                    {{comment.comment}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="childrenRoute">
+    <router-outlet></router-outlet>
+</ng-container>

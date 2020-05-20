@@ -1,0 +1,28 @@
+<div class="ui card four wide column mb-3">
+    <div class="image">
+        <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSh-ehghvWkW31MJb-aYTyFBd5cQZzNGnBVq8SpIJWzrdI0UDLQ&usqp=CAU">
+    </div>
+    <div class="content">
+        <a class="header">{{class.classname}}</a>
+        <div class="meta">
+            <span class="date">By {{class.author}}</span>
+        </div>
+        <div class="description">
+            <span>For {{class.section}}</span>
+        </div>
+    </div>
+    <div class="extra content">
+        <a>
+            <i class="users icon"></i>
+            {{class.student.length}} students
+        </a>
+
+        <div class="tiny ui buttons right floated">
+            <button class="ui inverted primary button" [routerLink]="['classroom', class._id]">Enter</button>
+            <div class="or" data-text="or"></div>
+            <button class="ui inverted red button">Delete</button>
+        </div>
+    </div>
+
+</div>
