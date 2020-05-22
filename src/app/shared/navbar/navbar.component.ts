@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 
 
@@ -12,11 +13,17 @@ export class NavbarComponent implements OnInit {
   @Input() userphoto;
   user: string;
 
-  constructor() { }
+  constructor(private aRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(atob(localStorage.getItem('lu-user')));
-    console.log(this.user['profession'])
+  }
+
+  signout() {
+    this.router.navigate(['signin']);
+    localStorage.removeItem('lu-user');
+    localStorage.removeItem('lu_current_classroom');
+    localStorage.removeItem('lu-user__photo');
   }
 
 }

@@ -27,16 +27,19 @@ export class SignInComponent implements OnInit {
 
 
   signIn() {
-    this.authService.signIn(this.credentials.value).subscribe((res) => {
-      let user = btoa(JSON.stringify(res))
-      localStorage.setItem('lu-user', user)
-      this.router.navigate([''])
-    }, err => {
-      this.error = err.error.message;
-      setTimeout(() => {
-        this.error = ''
-      }, 2000)
-    })
+    this.authService
+      .signIn(this.credentials.value)
+      .subscribe((res) => {
+        let user = btoa(JSON.stringify(res))
+        console.log(res, "SIGN IN")
+        localStorage.setItem('lu-user', user)
+        this.router.navigate([''])
+      }, err => {
+        this.error = err.error.message;
+        setTimeout(() => {
+          this.error = ''
+        }, 2000)
+      })
   }
 
 }

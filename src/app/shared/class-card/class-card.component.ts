@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'class-card',
@@ -8,10 +9,13 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ClassCardComponent implements OnInit {
 
   @Input() class;
-
+  @Output() deleteClass = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  delete(id) {
+    this.deleteClass.emit(id)
+  }
 }

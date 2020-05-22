@@ -9,18 +9,20 @@
         <form class="form-inline my-2 my-lg-0 ml-auto mr-4">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" *ngIf="user['profession']==='Teacher'">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#createClassModal"
-                        id="create_class-btn">Create Class</a>
+                    <a class="nav-link" data-toggle="modal" data-target="#createClassModal" id="create_class-btn">Create
+                        Class</a>
                 </li>
                 <li class="nav-item" *ngIf="user['profession']==='Student'">
-                    <a class="nav-link" href="#">Join Class</a>
+                    <a class="nav-link" data-toggle="modal" data-target="#joinClassModal">Join Class</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" (click)="signout()">Logout</a>
                 </li>
 
             </ul>
         </form>
+
+
 
         <ul class="navbar-nav" [routerLink]="['/profile', user['_id']]">
             <span>

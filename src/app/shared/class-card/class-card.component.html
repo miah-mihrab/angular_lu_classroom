@@ -21,7 +21,7 @@
         <div class="tiny ui buttons right floated">
             <button class="ui inverted primary button" [routerLink]="['classroom', class._id]">Enter</button>
             <div class="or" data-text="or"></div>
-            <button class="ui inverted red button">Delete</button>
+            <button class="ui inverted red button" (click)="delete(class._id)">Delete</button>
         </div>
     </div>
 

@@ -17,14 +17,17 @@ export class ProfileComponent implements OnInit {
   user: any;
   updating: boolean = false;
   file: any;
+  updateMessage: string = '';
+  updateErrorMessage: string = '';
+
   constructor(private profileService: ProfileService, private aRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(atob(localStorage.getItem('lu-user')))
+
     this.aRoute.params.subscribe(param => {
       this.id = param.id;
       this.profileService.getProfile(this.id).subscribe(res => {
-
         this.userForm = new FormGroup({
           firstname: new FormControl(res['firstname']),
           lastname: new FormControl(res['lastname']),
@@ -32,10 +35,9 @@ export class ProfileComponent implements OnInit {
           id: new FormControl(res['id']),
           batch: new FormControl(res['batch']),
           section: new FormControl(res['section']),
-          dob: new FormControl(res['dob']),
+          dob: new FormControl(res['dob'] ? res['dob'].split('/').join('-') : ''),
           semester: new FormControl(res['semester']),
           userphoto: new FormControl(res['userPhoto'])
-
         })
 
         this.loading = false
@@ -63,20 +65,33 @@ export class ProfileComponent implements OnInit {
     formData.append('email', user.email);
     formData.append('id', user.id);
     formData.append('_id', this.user._id);
-    formData.append('userPhoto', user.userphoto)
-
+    formData.append('userPhoto', user.userphoto);
+    formData.append('batch', user.batch);
+    formData.append('section', user.section);
+    formData.append('semester', user.semester);
+    formData.append('dob', user.dob);
     if (this.file) {
       delete user.userphoto
       formData.append('photo', this.file);
     }
+    this.profileService.updateUser(this.id, formData).subscribe(res => {
+      if (res.success === true) {
 
-    if (user.batch === null) {
-      delete user.batch;
-      delete user.section;
-      delete user.dob;
-      delete user.semester
-    }
-
-    this.profileService.updateUser(this.id, formData)
+        let obj = Object.assign({}, res.user);
+        let user = btoa(JSON.stringify(obj));
+        localStorage.setItem('lu-user', user);
+        this.updateMessage = "Profile Updated";
+        setTimeout(() => {
+          this.updateMessage = ''
+        }, 2000)
+      } else {
+        this.updateErrorMessage = "Something went wrong please try again later"
+        setTimeout(() => {
+          this.updateErrorMessage = ''
+        }, 2000)
+      }
+    }, err => {
+      console.log(err)
+    })
   }
 }

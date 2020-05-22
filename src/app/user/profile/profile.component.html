@@ -1,3 +1,9 @@
+<div class="container" *ngIf="updateMessage!=''">
+    <div class="alert alert-success">{{updateMessage}}</div>
+</div>
+<div class="container" *ngIf="updateErrorMessage!=''">
+    <div class="alert alert-danger">{{updateErrorMessage}}</div>
+</div>
 <h1 class="heading-secondary text-center mt-5">Account Settings</h1>
 <div class="acnt_container " style="min-height: 50vh;">
     <div class="side-menu">
@@ -56,29 +62,30 @@
                 </div>
                 <div class="field">
                     <label>Email</label>
-                    <input type="text" name="last-name" placeholder="Last Name" formControlName="email">
+                    <input type="text" name="email" placeholder="email" formControlName="email">
                 </div>
                 <div class="field">
                     <label>ID</label>
-                    <input type="text" name="last-name" placeholder="Last Name" formControlName="id">
+                    <input type="text" name="id" placeholder="id" formControlName="id">
                 </div>
 
+                <!-- IF STUDENT -->
                 <ng-container *ngIf="user['profession']==='Student'">
                     <div class="field">
                         <label>Batch</label>
-                        <input type="text" name="last-name" placeholder="Last Name" formControlName="batch">
+                        <input type="text" name="batch" placeholder="batch" formControlName="batch">
                     </div>
                     <div class="field">
                         <label>Section</label>
-                        <input type="text" name="last-name" placeholder="Last Name" formControlName="section">
+                        <input type="text" name="section" placeholder="section" formControlName="section">
                     </div>
                     <div class="field">
                         <label>Semester</label>
-                        <input type="text" name="last-name" placeholder="Last Name" formControlName="semester">
+                        <input type="text" name="semester" placeholder="semester" formControlName="semester">
                     </div>
                     <div class="field">
                         <label>DOB</label>
-                        <input type="date" name="last-name" placeholder="Last Name" formControlName="dob">
+                        <input type="date" name="dob" placeholder="dob" formControlName="dob">
                     </div>
                 </ng-container>
 
@@ -90,9 +97,6 @@
                 <ng-container *ngIf='updating'>
                     <button class="ui inverted green loading button float-right">Loading</button>
                 </ng-container>
-
-
-
             </form>
         </div>
         <hr>

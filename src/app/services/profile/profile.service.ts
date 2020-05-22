@@ -14,12 +14,6 @@ export class ProfileService {
     return this.http.get(`http://localhost:5000/profile/${id}`)
   }
   updateUser(id, formVal) {
-    this.http.patch<any>(`http://localhost:5000/profile/${id}`, formVal).subscribe(res => {
-      console.log(res)
-      let user = btoa(JSON.stringify(res.user));
-      localStorage.setItem('lu-user', user)
-    }, err => {
-      console.log(err)
-    })
+    return this.http.patch<any>(`http://localhost:5000/profile/${id}`, formVal)
   }
 }
