@@ -1,8 +1,10 @@
+import { Location } from '@angular/common';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ProfileService } from './../../services/profile/profile.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
+declare var $: any;
 
 @Component({
   selector: 'app-profile',
@@ -19,12 +21,26 @@ export class ProfileComponent implements OnInit {
   file: any;
   updateMessage: string = '';
   updateErrorMessage: string = '';
-
-  constructor(private profileService: ProfileService, private aRoute: ActivatedRoute) { }
+  courses = [];
+  showResult: boolean = false;
+  student = [];
+  constructor(
+    private profileService: ProfileService,
+    private aRoute: ActivatedRoute,
+    private location: Location,
+    private router: Router) {
+    this.router.events.subscribe(() => {
+      console.log(this.location.path().includes('result'))
+      if (this.location.path().includes('result') || this.location.path().includes('routine')) {
+        this.showResult = true;
+      } else {
+        this.showResult = false;
+      }
+    })
+  }
 
   ngOnInit(): void {
     this.user = JSON.parse(atob(localStorage.getItem('lu-user')))
-
     this.aRoute.params.subscribe(param => {
       this.id = param.id;
       this.profileService.getProfile(this.id).subscribe(res => {
@@ -76,7 +92,6 @@ export class ProfileComponent implements OnInit {
     }
     this.profileService.updateUser(this.id, formData).subscribe(res => {
       if (res.success === true) {
-
         let obj = Object.assign({}, res.user);
         let user = btoa(JSON.stringify(obj));
         localStorage.setItem('lu-user', user);
@@ -94,4 +109,17 @@ export class ProfileComponent implements OnInit {
       console.log(err)
     })
   }
+
+  toggleSideBar() {
+    $('.ui.sidebar')
+      .sidebar('toggle')
+      ;
+
+  }
+
+
+
+
+
+
 }
