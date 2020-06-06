@@ -1,5 +1,6 @@
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { PasswordMatching } from 'src/app/validators/password-matching.validators';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,32 +10,40 @@ import { Component, OnInit } from '@angular/core';
 export class SignUpComponent implements OnInit {
 
 
-  signupForm = new FormGroup({
-    firstname: new FormControl('', [
-      Validators.required
-    ]),
-    lastname: new FormControl('', [
-      Validators.required
-    ]),
-    email: new FormControl('', [
-      Validators.required
-    ]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.pattern(new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"))
-    ]),
-    id: new FormControl('', [
-      Validators.required
-    ]),
-    department: new FormControl('', [
-      Validators.required
-    ]),
-    profession: new FormControl('', [
-      Validators.required
-    ])
-  })
+  signupForm: FormGroup;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {
+    this.signupForm = this.fb.group({
+
+      firstname: ['', [Validators.required]],
+      lastname: ['', [
+        Validators.required
+      ]],
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.pattern(new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"))
+      ]],
+      confirm_password: ['', [
+        Validators.required
+      ]],
+      id: ['', [
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ]],
+      department: ['', [
+        Validators.required
+      ]],
+      profession: ['', [
+        Validators.required
+      ]]
+    }, {
+      validator: PasswordMatching.passwordShouldMatch
+    })
+  }
 
   ngOnInit(): void { }
 

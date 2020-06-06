@@ -1,14 +1,10 @@
-<div id="LoginForm" style="min-height: 100vh;">
-
-</div>
-<div class="ui segment container" style="min-height: 80vh; top: 10vh;left: 180px; position: absolute;">
-    <h1 class="form-heading">login Form</h1>
+<div class="ui segment container" style="margin-top: 10vh;">
     <div class="login-form">
         <div class="main-div">
             <app-errors></app-errors>
             <div class="panel">
-                <h2>Register Here</h2>
-                <p>Please enter valid informations</p>
+                <h2 class="text-center">Register Here</h2>
+                <p class="text-center">Please fill up complete form</p>
             </div>
             <form id="signup" [formGroup]="signupForm">
                 <div class="form-group row">
@@ -16,25 +12,57 @@
                         <label for="fname" class="form__label">First Name</label>
                         <input type="text" id="fname" data-toggle="tooltip" class="form-control"
                             placeholder="First Name" formControlName="firstname">
+
+
+                        <div *ngIf="signupForm.get('firstname').invalid && (signupForm.get('firstname').dirty || signupForm.get('firstname').touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="signupForm.get('firstname').errors.required">
+                                * Firstname is required.
+                            </div>
+                        </div>
                     </div>
+
                     <div class="col-md-6">
                         <label for="lname" class="form__label">Last Name</label>
                         <input type="text" id="lname" data-toggle="tooltip" class="form-control" placeholder="Last Name"
                             formControlName="lastname">
+                        <div *ngIf="signupForm.get('lastname').invalid && (signupForm.get('lastname').dirty || signupForm.get('lastname').touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="signupForm.get('lastname').errors.required">
+                                * Lastname is required.
+                            </div>
+                        </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
                     <div class="col-md-6">
                         <label for="email" class="form__label">Email address</label>
-                        <input type="text" id="email" class="form-control" type="email" placeholder="you@example.com" ,
+                        <input type="text" id="email" class="form-control" type="email" placeholder="you@example.com"
                             name="email" formControlName="email">
+                        <div *ngIf="signupForm.get('email').invalid && (signupForm.get('email').dirty || signupForm.get('email').touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="signupForm.get('email').errors.required">
+                                * Email is required.
+                            </div>
+                            <div *ngIf="signupForm.get('email').errors.email">
+                                * Please provide valid email
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label for="id" class="form__label">Universy Id</label>
                         <input type="text" data-toggle="tooltip" class="form-control" name="id" placeholder="ID number"
                             formControlName="id">
-
+                        <div *ngIf="signupForm.get('id').invalid && (signupForm.get('id').dirty || signupForm.get('id').touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="signupForm.get('id').errors.required">
+                                * Id is required.
+                            </div>
+                            <div *ngIf="signupForm.get('id').errors.pattern">
+                                * Id should be numbers only
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -43,12 +71,31 @@
                         <label for="password" class="form__label">Password</label>
                         <input type="password" id="password" class="form-control" placeholder="********" name="password"
                             formControlName="password">
+
+                        <div *ngIf="signupForm.get('password').invalid && (signupForm.get('password').dirty || signupForm.get('password').touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="signupForm.get('password').errors.required">
+                                * Password is required.
+                            </div>
+                            <div *ngIf="signupForm.get('password').errors.pattern">
+                                * Password must be combination of uppercase and lowercase letters, numbers and special
+                                characters and min length is six
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label for="confirmPassword" class="form__label">Confirm Password</label>
-                        <input type="password" id="password2" class="form-control" placeholder="********" minlength="6"
-                            name="confirmPassword" data-toggle="tooltip"
-                            title="Password should match with first password" required>
+                        <input type="password" id="confirm_password" class="form-control" placeholder="********"
+                            name="confirm_password" formControlName="confirm_password">
+                        <div *ngIf="signupForm.get('confirm_password').invalid && (signupForm.get('confirm_password').touched || signupForm.get('confirm_password').dirty)"
+                            class="alert alert-danger">
+                            * Password confirmation is required
+                        </div>
+
+                        <div *ngIf="signupForm.get('confirm_password').valid && signupForm.invalid && signupForm.errors?signupForm.errors.mismatch:null"
+                            class="alert alert-danger">
+                            * Password should match
+                        </div>
                     </div>
                 </div>
 
@@ -59,25 +106,39 @@
                     <div class="col-md-6">
                         <label for="department" class="form__label">Department</label>
 
-                        <select class="form-control" name="department" id="department">
-                            <option selected> Department</option>
-                            <option>CSE</option>
-                            <option>EEE</option>
+                        <select class="form-control" name="department" id="department" formControlName="department">
+                            <option value=""> Department</option>
+                            <option value="CSE">CSE</option>
+                            <option value="EEE">EEE</option>
                         </select>
+
+                        <div *ngIf="signupForm.get('department').invalid && (signupForm.get('department').dirty || signupForm.get('department').touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="signupForm.get('department').errors.required">
+                                * Department is required.
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-md-6">
                         <label for="profession" class="form__label">Profession</label>
-                        <select class="form-control" name="profession" id="profession">
-                            <option selected>Profession</option>
-                            <option>Teacher</option>
-                            <option>Student</option>
+                        <select class="form-control" name="profession" id="profession" formControlName="profession">
+                            <option value="">Profession</option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="Student">Student</option>
                         </select>
+                        <div *ngIf="signupForm.get('profession').invalid && (signupForm.get('profession').dirty || signupForm.get('profession').touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="signupForm.get('profession').errors.required">
+                                * Profession is required.
+                            </div>
+                        </div>
                     </div>
 
                 </div>
                 <div class="form-group">
-                    <button class="btn btn--green" id="reg-button">
+                    <button class="btn btn-primary" id="reg-button" (click)="registerNewAccount()"
+                        [disabled]="signupForm.invalid">
                         Sign Up
                     </button>
                 </div>
