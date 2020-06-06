@@ -14,6 +14,10 @@ export class ClassorkComponent implements OnInit {
     details: new FormControl()
   });
 
+  submitAssignment = new FormGroup({
+    name: new FormControl(),
+    description: new FormControl()
+  })
 
   file: any;
   classroomId: any;
@@ -29,7 +33,6 @@ export class ClassorkComponent implements OnInit {
     this.classService
       .getClassworks(this.classroomId)
       .subscribe(res => {
-        console.log(res)
         let keys = Object.keys(res)
         for (let i = 0; i < res['classWorks'].length; i++) {
           let classwork = res['classWorks'][i]
@@ -43,7 +46,6 @@ export class ClassorkComponent implements OnInit {
             _id: classwork['_id']
           })
         }
-        console.log(this.allClassworks)
 
       }, (err: Response) => {
         console.log(err)
@@ -98,7 +100,7 @@ export class ClassorkComponent implements OnInit {
   }
 
 
-  makePdf(b64Data, name) {
+  makeFile(b64Data, name) {
 
     const linkSource = 'data:application/pdf;base64,' + b64Data;
     const downloadLink = document.createElement("a");
@@ -110,6 +112,29 @@ export class ClassorkComponent implements OnInit {
 
 
   }
+
+  assignmentSubmission(assignmentId) {
+    let assignment = this.submitAssignment.value;
+    let formData = new FormData();
+
+    formData.append('name', this.user.firstname + " " + this.user.lastname)
+    formData.append('studentId', this.user.id)
+    formData.append('details', assignment.details)
+    formData.append('assignmentname', assignment.name)
+    formData.append('assignmentId', assignmentId)
+    formData.append('userId', this.user._id)
+    formData.append('file', this.file)
+    this.classService
+      .submitAssignment(formData, this.classroomId)
+      .subscribe(res => {
+        console.log(res)
+      }, (err: Response) => {
+        console.log(err)
+      })
+    // formData.append('assignmentname', classwork.assignmentname);
+    // formData.append('details', classwork.details)
+  }
+
 
   deleteAssignment(id) {
     console.log(id);

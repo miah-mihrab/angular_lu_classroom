@@ -30,4 +30,10 @@ export class UserClassService {
   deleteAssignemnt(id) {
     return this.http.delete(`http://localhost:5000/classroom/${id}/classwork`);
   }
+
+  // STUDENT
+  submitAssignment(assignment, classroomId) {
+    return this.http.post(`http://localhost:5000/classroom/${classroomId}/classwork`, assignment)
+  }
+
 }

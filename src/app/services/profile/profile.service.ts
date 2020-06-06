@@ -16,4 +16,8 @@ export class ProfileService {
   updateUser(id, formVal) {
     return this.http.patch<any>(`http://localhost:5000/profile/${id}`, formVal)
   }
+
+  updatePassword(id, formVal) {
+    return this.http.patch(`http://localhost:5000/profile/update-password/${id}`, formVal)
+  }
 }

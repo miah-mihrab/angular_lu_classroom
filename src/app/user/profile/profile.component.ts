@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProfileService } from './../../services/profile/profile.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,10 +14,25 @@ declare var $: any;
 export class ProfileComponent implements OnInit {
 
   userForm: FormGroup;
+  passwordForm = new FormGroup({
+    old_password: new FormControl('', [
+      Validators.required
+    ]),
+    new_password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.pattern(new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"))
+    ]
+    ),
+    confirm_password: new FormControl('', [
+      Validators.required
+    ])
+  })
   loading: boolean = true;
   id;
   user: any;
   updating: boolean = false;
+  updatingPass: boolean = false;
   file: any;
   updateMessage: string = '';
   updateErrorMessage: string = '';
@@ -103,6 +118,7 @@ export class ProfileComponent implements OnInit {
         this.updateErrorMessage = "Something went wrong please try again later"
         setTimeout(() => {
           this.updateErrorMessage = ''
+
         }, 2000)
       }
     }, err => {
@@ -119,7 +135,20 @@ export class ProfileComponent implements OnInit {
 
 
 
-
+  updatePassword() {
+    this.updatingPass = !this.updatingPass
+    console.log(this.passwordForm.value)
+    this.profileService.updatePassword(this.id, this.passwordForm.value).subscribe(res => {
+      console.log(res)
+      this.updateMessage = "Password Updated"
+      setTimeout(() => {
+        this.updateMessage = ''
+      }, 2000)
+      this.updatingPass = !this.updatingPass
+    }, (err: Response) => {
+      this.updateErrorMessage = err['message']
+    })
+  }
 
 
 }

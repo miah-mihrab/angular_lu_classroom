@@ -1,0 +1,88 @@
+<div id="LoginForm" style="min-height: 100vh;">
+
+</div>
+<div class="ui segment container" style="min-height: 80vh; top: 10vh;left: 180px; position: absolute;">
+    <h1 class="form-heading">login Form</h1>
+    <div class="login-form">
+        <div class="main-div">
+            <app-errors></app-errors>
+            <div class="panel">
+                <h2>Register Here</h2>
+                <p>Please enter valid informations</p>
+            </div>
+            <form id="signup" [formGroup]="signupForm">
+                <div class="form-group row">
+                    <div class="col-md-6" style="float: left;">
+                        <label for="fname" class="form__label">First Name</label>
+                        <input type="text" id="fname" data-toggle="tooltip" class="form-control"
+                            placeholder="First Name" formControlName="firstname">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lname" class="form__label">Last Name</label>
+                        <input type="text" id="lname" data-toggle="tooltip" class="form-control" placeholder="Last Name"
+                            formControlName="lastname">
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="email" class="form__label">Email address</label>
+                        <input type="text" id="email" class="form-control" type="email" placeholder="you@example.com" ,
+                            name="email" formControlName="email">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="id" class="form__label">Universy Id</label>
+                        <input type="text" data-toggle="tooltip" class="form-control" name="id" placeholder="ID number"
+                            formControlName="id">
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="password" class="form__label">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="********" name="password"
+                            formControlName="password">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="confirmPassword" class="form__label">Confirm Password</label>
+                        <input type="password" id="password2" class="form-control" placeholder="********" minlength="6"
+                            name="confirmPassword" data-toggle="tooltip"
+                            title="Password should match with first password" required>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row">
+
+                    <div class="col-md-6">
+                        <label for="department" class="form__label">Department</label>
+
+                        <select class="form-control" name="department" id="department">
+                            <option selected> Department</option>
+                            <option>CSE</option>
+                            <option>EEE</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="profession" class="form__label">Profession</label>
+                        <select class="form-control" name="profession" id="profession">
+                            <option selected>Profession</option>
+                            <option>Teacher</option>
+                            <option>Student</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <button class="btn btn--green" id="reg-button">
+                        Sign Up
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

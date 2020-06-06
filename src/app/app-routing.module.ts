@@ -10,7 +10,13 @@ const routes: Routes = [
         .then(m => m.HomeModule)
   },
   {
-    path: 'signin',
+    path: 'user',
+    loadChildren: () =>
+      import('./auth/auth.module')
+        .then(m => m.AuthModule)
+  },
+  {
+    path: 'signup',
     loadChildren: () =>
       import('./auth/auth.module')
         .then(m => m.AuthModule)
