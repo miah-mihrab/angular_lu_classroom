@@ -119,8 +119,7 @@
                                     <select class="form-control" name="department" id="department"
                                         formControlName="department">
                                         <option value=""> Department</option>
-                                        <option value="CSE">CSE</option>
-                                        <option value="EEE">EEE</option>
+                                        <option [value]="item" *ngFor="let item of programNames">{{item}}</option>
                                     </select>
 
                                     <div *ngIf="signupForm.get('department').invalid && (signupForm.get('department').dirty || signupForm.get('department').touched)"

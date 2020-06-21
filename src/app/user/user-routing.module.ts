@@ -1,5 +1,5 @@
-import { RoutineComponent } from './routine/routine.component';
-import { ResultComponent } from './result/result.component';
+import { ClassRoutineComponent } from './class-routine/class-routine.component';
+import { StudentResultComponent } from './student-result/student-result.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './../guard/auth/auth.guard';
 import { NgModule } from '@angular/core';
@@ -9,8 +9,8 @@ const routes: Routes = [
     {
         path: '', component: ProfileComponent, canActivate: [AuthGuard],
         children: [
-            { path: 'result', component: ResultComponent },
-            { path: 'routine', component: RoutineComponent }
+            { path: 'result', component: StudentResultComponent },
+            { path: 'routine', component: ClassRoutineComponent }
         ]
     }
 ];

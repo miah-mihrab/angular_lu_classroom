@@ -1,3 +1,4 @@
+import { programCodes } from './../../utils/ProgramCodes';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth/auth.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -13,7 +14,9 @@ export class SignUpComponent implements OnInit {
 
 
   signupForm: FormGroup;
+  programNames;
   errorMessage = ''
+
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.signupForm = this.fb.group({
 
@@ -47,7 +50,9 @@ export class SignUpComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.programNames = Object.keys(programCodes);
+  }
 
   registerNewAccount() {
     // console.log(this.signupForm.value)

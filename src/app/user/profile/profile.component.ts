@@ -106,6 +106,7 @@ export class ProfileComponent implements OnInit {
       formData.append('photo', this.file);
     }
     this.profileService.updateUser(this.id, formData).subscribe(res => {
+      this.updating = false;
       if (res.success === true) {
         let obj = Object.assign({}, res.user);
         let user = btoa(JSON.stringify(obj));
