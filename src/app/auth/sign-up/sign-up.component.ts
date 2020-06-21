@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../../services/auth/auth.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { PasswordMatching } from 'src/app/validators/password-matching.validators';
@@ -11,8 +13,8 @@ export class SignUpComponent implements OnInit {
 
 
   signupForm: FormGroup;
-
-  constructor(private fb: FormBuilder) {
+  errorMessage = ''
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.signupForm = this.fb.group({
 
       firstname: ['', [Validators.required]],
@@ -48,7 +50,17 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void { }
 
   registerNewAccount() {
-    console.log(this.signupForm.value)
+    // console.log(this.signupForm.value)
+    this.authService.signup(this.signupForm.value)
+      .subscribe(res => {
+        let user = btoa(JSON.stringify(res))
+        console.log(res, "SIGN IN")
+        localStorage.setItem('lu-user', user)
+        this.router.navigate([''])
+
+      }, (err: Response) => {
+        console.log(err)
+      })
   }
 
 }

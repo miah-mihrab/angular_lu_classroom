@@ -11,4 +11,7 @@ export class AuthService {
   signIn(credentials) {
     return this.http.post('http://localhost:5000/signin', credentials)
   }
+  signup(infos) {
+    return this.http.post('http://localhost:5000/registration', infos)
+  }
 }

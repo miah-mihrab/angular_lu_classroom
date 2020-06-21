@@ -111,8 +111,10 @@ export class ProfileComponent implements OnInit {
         let user = btoa(JSON.stringify(obj));
         localStorage.setItem('lu-user', user);
         this.updateMessage = "Profile Updated";
+        this.updating = false;
         setTimeout(() => {
           this.updateMessage = ''
+
         }, 2000)
       } else {
         this.updateErrorMessage = "Something went wrong please try again later"
@@ -139,14 +141,23 @@ export class ProfileComponent implements OnInit {
     this.updatingPass = !this.updatingPass
     console.log(this.passwordForm.value)
     this.profileService.updatePassword(this.id, this.passwordForm.value).subscribe(res => {
-      console.log(res)
+      if (res['error']) {
+        this.updateErrorMessage = res['error']
+        setTimeout(() => {
+          this.updateErrorMessage = ''
+        }, 2000)
+      }
       this.updateMessage = "Password Updated"
       setTimeout(() => {
         this.updateMessage = ''
       }, 2000)
       this.updatingPass = !this.updatingPass
     }, (err: Response) => {
-      this.updateErrorMessage = err['message']
+      console.log(err, "ERRORRRR")
+      this.updateErrorMessage = err['message'];
+      setTimeout(() => {
+        this.updateErrorMessage = ''
+      }, 2000)
     })
   }
 

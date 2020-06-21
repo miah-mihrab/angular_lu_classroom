@@ -20,10 +20,10 @@ export class NavbarComponent implements OnInit {
   }
 
   signout() {
-    this.router.navigate(['signin']);
     localStorage.removeItem('lu-user');
     localStorage.removeItem('lu_current_classroom');
     localStorage.removeItem('lu-user__photo');
+    this.router.navigate(['user/signin']);
   }
 
 }

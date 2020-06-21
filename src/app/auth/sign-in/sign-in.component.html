@@ -1,32 +1,51 @@
-<div id="LoginForm" style="min-height: 100vh;">
+<div class="container-fluid" style="min-height: 100%; overflow: auto;">
 
-</div>
-<div class="ui segment container" style="min-height: 80vh; top: 10vh;left: 180px; position: absolute;">
-    <h1 class="form-heading">login Form</h1>
-    <div class="login-form">
-        <div class="main-div">
+    <div class="row">
+        <div class="col-lg-7 d-none-md">
+            <img src="../../../assets/images/lu-theme5.svg" class=" " alt="...">
+        </div>
+        <div class="col-lg-5 col-md-12">
+            <div class="logo mt-5">
+                <img src="../../../assets/images/lu-logo-2.png" alt="">
+            </div>
             <app-errors [message]="error!=''?error:''"></app-errors>
             <div class="panel">
-                <h2>Login To Your Account</h2>
-                <p>Please enter your email and password</p>
+                <h2>Login Form</h2>
             </div>
             <form id="Login" [formGroup]="credentials">
                 <div class="form-group">
                     <input type="email" class="form-control" id="inputEmail" placeholder="Email Address" name="email"
                         formControlName="email" required>
+                    <div *ngIf="credentials.get('email').invalid && (credentials.get('email').dirty || credentials.get('email').touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="credentials.get('email').errors.required">
+                            * Email is required.
+                        </div>
+                        <div *ngIf="credentials.get('email').errors.email">
+                            * Please provide valid email
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <input type="password" class="form-control" id="inputPassword" placeholder="Password"
                         name="password" formControlName="password" required>
+                    <div *ngIf="credentials.get('password').invalid && (credentials.get('password').dirty || credentials.get('password').touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="credentials.get('password').errors.required">
+                            * Password is required.
+                        </div>
+                    </div>
                 </div>
 
-                <div class="forgot">
-                    <a href="">Forgot password?</a>
-                </div>
                 <button type="submit" class="btn btn-primary" (click)="signIn()">Login</button>
 
+                <div class="forgot pt-3">
+                    <a href="">Forgot password?</a><br>
+                    <a [routerLink]="['/user/signup']">No account? Create one</a>
+                </div>
             </form>
         </div>
     </div>
+
 </div>

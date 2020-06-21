@@ -19,6 +19,7 @@ export class SignInComponent implements OnInit {
     ]),
     password: new FormControl('', [
       Validators.required
+
     ]),
   })
   constructor(private authService: AuthService, private router: Router) { }

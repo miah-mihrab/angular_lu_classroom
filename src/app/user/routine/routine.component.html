@@ -1,0 +1,26 @@
+<div class="container mt-5 search-routine">
+    <form action="">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Semester" [(ngModel)]="semester"
+                        name="semester">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Section" [(ngModel)]="section" name="section">
+                </div>
+            </div>
+            <div class="col-6">
+                <select class="custom-select" [(ngModel)]="programName" name="programName">
+                    <option *ngFor="let item of programNames" value="item">{{item}}</option>
+                </select>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="container">
+
+</div>
