@@ -76,8 +76,13 @@
                             <div class="form-group row">
                                 <div class="col-md-6">
                                     <label for="password" class="form__label">Password</label>
-                                    <input type="password" id="password" class="form-control" placeholder="********"
-                                        name="password" formControlName="password">
+                                    <div class="input-group mb-3">
+                                        <input type="password" id="password" class="form-control" placeholder="********"
+                                            name="password" id="pass" formControlName="password">
+                                        <div class="input-group-append" (click)="showPass('pass')">
+                                            <span class="input-group-text"><i class="eye slash icon"></i></span>
+                                        </div>
+                                    </div>
 
                                     <div *ngIf="signupForm.get('password').invalid && (signupForm.get('password').dirty || signupForm.get('password').touched)"
                                         class="alert alert-danger">
@@ -94,9 +99,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="confirmPassword" class="form__label">Confirm Password</label>
-                                    <input type="password" id="confirm_password" class="form-control"
-                                        placeholder="********" name="confirm_password"
-                                        formControlName="confirm_password">
+                                    <div class="input-group mb-3">
+                                        <input type="password" id="confirm_password" class="form-control"
+                                            placeholder="********" name="confirm_password" id="confirm_pass"
+                                            formControlName="confirm_password">
+                                        <div class="input-group-append" (click)="showPass('confirm_pass')">
+                                            <span class="input-group-text"><i class="eye slash icon"></i></span>
+                                        </div>
+                                    </div>
+
                                     <div *ngIf="signupForm.get('confirm_password').invalid && (signupForm.get('confirm_password').touched || signupForm.get('confirm_password').dirty)"
                                         class="alert alert-danger">
                                         * Password confirmation is required

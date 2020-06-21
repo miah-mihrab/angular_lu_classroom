@@ -68,4 +68,17 @@ export class SignUpComponent implements OnInit {
       })
   }
 
+
+  showPass(id) {
+    console.log(id, 'di')
+    let dom: HTMLInputElement = document.querySelector(`#${id}`);
+    console.log(dom.type)
+
+    if (dom.type === 'password') {
+      dom.type = 'text'
+    } else {
+      dom.type = 'password'
+    }
+    console.log(dom.type)
+  }
 }

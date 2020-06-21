@@ -1,3 +1,4 @@
+import { programCodes } from './../../utils/ProgramCodes';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProfileService } from './../../services/profile/profile.service';
@@ -13,6 +14,8 @@ declare var $: any;
 })
 export class ProfileComponent implements OnInit {
 
+
+  programNames;
   userForm: FormGroup;
   passwordForm = new FormGroup({
     old_password: new FormControl('', [
@@ -39,6 +42,8 @@ export class ProfileComponent implements OnInit {
   courses = [];
   showResult: boolean = false;
   student = [];
+  department: any;
+
   constructor(
     private profileService: ProfileService,
     private aRoute: ActivatedRoute,
@@ -55,10 +60,12 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.programNames = Object.keys(programCodes);
     this.user = JSON.parse(atob(localStorage.getItem('lu-user')))
     this.aRoute.params.subscribe(param => {
       this.id = param.id;
       this.profileService.getProfile(this.id).subscribe(res => {
+        console.log(res)
         this.userForm = new FormGroup({
           firstname: new FormControl(res['firstname']),
           lastname: new FormControl(res['lastname']),
@@ -66,11 +73,15 @@ export class ProfileComponent implements OnInit {
           id: new FormControl(res['id']),
           batch: new FormControl(res['batch']),
           section: new FormControl(res['section']),
+          department: new FormControl(res['department'], [
+            Validators.required
+          ]),
           dob: new FormControl(res['dob'] ? res['dob'].split('/').join('-') : ''),
           semester: new FormControl(res['semester']),
-          userphoto: new FormControl(res['userPhoto'])
+          userphoto: new FormControl(res['userPhoto']),
         })
 
+        this.department = this.userForm['department']
         this.loading = false
       }, err => {
         console.log(err)
@@ -101,6 +112,7 @@ export class ProfileComponent implements OnInit {
     formData.append('section', user.section);
     formData.append('semester', user.semester);
     formData.append('dob', user.dob);
+    formData.append('department', user.department);
     if (this.file) {
       delete user.userphoto
       formData.append('photo', this.file);
@@ -163,4 +175,16 @@ export class ProfileComponent implements OnInit {
   }
 
 
+  showPass(id) {
+    console.log(id, 'di')
+    let dom: HTMLInputElement = document.querySelector(`#${id}`);
+    console.log(dom.type)
+
+    if (dom.type === 'password') {
+      dom.type = 'text'
+    } else {
+      dom.type = 'password'
+    }
+    console.log(dom.type)
+  }
 }

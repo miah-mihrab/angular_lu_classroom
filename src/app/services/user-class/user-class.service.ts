@@ -12,11 +12,12 @@ export class UserClassService {
     return this.http.get(`http://localhost:5000/classroom/${id}`);
   }
   createClassPost(post) {
-    return this.http.post(`http://localhost:5000/classroom/${post.class}`, post)
+    console.log(post)
+    return this.http.post(`http://localhost:5000/classroom/${post.get('class')}`, post)
   }
 
   updatePostWithComment(comment) {
-    return this.http.patch(`http://localhost:5000/classroom/${comment.postID}`, comment)
+    return this.http.patch(`http://localhost:5000/classroom/${comment.get('postID')}`, comment)
   }
 
   createClasswork(classwork, classroomId) {

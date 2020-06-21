@@ -3,6 +3,7 @@ import { Location } from '@angular/common'
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserClassService } from 'src/app/services/user-class/user-class.service';
 import { PostType } from '../../utils/ClassPostType'
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-clasroom',
   templateUrl: './clasroom.component.html',
@@ -35,18 +36,28 @@ export class ClasroomComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = JSON.parse(atob(localStorage.getItem('lu-user')))
-    this.userphoto = localStorage.getItem('lu-user__photo');
 
+
+    this.user = JSON.parse(atob(localStorage.getItem('lu-user')))
+    this.userphoto = this.user.photo;
     console.log(this.user)
     this.aRoute.params.subscribe(param => {
       this.id = param.id
       this.classService.getClass(this.id).subscribe(res => {
-        console.log(res)
+        console.log(res, "RESULT")
         localStorage.setItem('lu_current_classroom', res['classID'])
         this.classContent = res;
         this.classPosts = this.classContent.ClassPosts;
+        this.classPosts.reverse();
+        setTimeout(() => {
+          let allComments = document.querySelectorAll('.cmnts');
 
+          allComments.forEach(e => {
+            console.log('here')
+            e.scrollTop = e.scrollHeight - e.clientHeight;
+          })
+
+        }, 1000)
       }, (err: Response) => {
         console.log(err);
       })
@@ -54,33 +65,39 @@ export class ClasroomComponent implements OnInit {
   }
 
 
-  createPost() {
-    let post = {
-      content: this.post,
-      class: this.id,
-      author: this.user.firstname + " " + this.user.lastname,
-      photo: this.userphoto
-    }
-    this.classService.createClassPost(post).subscribe((res: any) => {
+  createPost(form: NgForm) {
+
+    let formData = new FormData();
+    formData.append('content', this.post);
+    formData.append('class', this.id);
+    formData.append('author', this.user.firstname + " " + this.user.lastname);
+    formData.append('userPhoto', this.userphoto);
+    this.classService.createClassPost(formData).subscribe((res: any) => {
+      this.classPosts.reverse()
       this.classPosts.push(res)
+      this.classPosts.reverse();
     }, err => {
       console.log(err);
     })
+    form.reset();
   }
 
-  postComment(postID) {
-    console.log(this.comment)
-    let comment = {
-      postID,
-      comment: this.comment,
-      author: this.user.firstname + " " + this.user.lastname,
-      photo: this.userphoto
-    }
-    this.classService.updatePostWithComment(comment).subscribe(res => {
+  postComment(postID, form: NgForm) {
+
+    let formData = new FormData();
+    formData.append('postID', postID);
+    formData.append('comment', form.value.comment);
+    formData.append('author', this.user.firstname + " " + this.user.lastname);
+    formData.append('userPhoto', this.userphoto);
+    this.classService.updatePostWithComment(formData).subscribe(res => {
       let post = this.classPosts.filter(pst => pst['_id'] === postID)
-      post[0]['comments'].push(res['comments'][res['comments'].length - 1])
+      post[0]['comments'].push(res['comments'][res['comments'].length - 1]);
+
     }, err => {
       console.log(err);
     })
+    this.comment = '';
+
   }
 }
+

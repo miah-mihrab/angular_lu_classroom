@@ -3,9 +3,9 @@
         <a class="item" [routerLink]="['./classwork']" [routerLinkActive]="['active']">
             Classwork
         </a>
-        <a class="item" [routerLink]="['./students']" [routerLinkActive]="['active']">
+        <!-- <a class="item" [routerLink]="['./students']" [routerLinkActive]="['active']">
             Students
-        </a>
+        </a> -->
     </div>
 
 </div>
@@ -35,25 +35,23 @@
                         <li class="list-group-item disabled text-white"
                             style="font-size: 1.5rem; font-weight:bolder; background-color: #F96E4C">All Students</li>
 
-                        <!-- 
-                        <ng-container *ngIf="students.length">
-                            <li class="list-group-item disabled" *ngFor="let students of students">{{student}}</li>
+                        <ng-container *ngIf=classContent>
+                            <li class="list-group-item" *ngIf="classContent && classContent.student.length===0">No
+                                Student Enrolled</li>
+                            <li class="list-group-item" *ngFor="let item of classContent.student">{{item}}</li>
                         </ng-container>
-                        <ng-container *ngIf="students.length===0">
-                            <li class="list-group-item disabled">No Student Enrolled</li>
-                        </ng-container> -->
 
                     </ul>
                 </div>
 
 
                 <div class="twelve wide column">
-                    <form class="" id="classroomForm" style="overflow: hidden;">
+                    <form class="" id="classroomForm" style="overflow: hidden;" #f="ngForm">
                         <div class="form-group">
                             <label for="createPost" class="text-secondary" style="font-weight: 700;">Create Post</label>
                             <textarea class="form-control" id="post" rows="3" [(ngModel)]="post" name="post"></textarea>
                         </div>
-                        <button class="ui inverted primary button float-right" (click)="createPost()">Post</button>
+                        <button class="ui inverted primary button float-right" (click)="createPost(f)">Post</button>
                     </form>
 
                     <div class="allPosts">
@@ -61,32 +59,35 @@
                             <div class="post" *ngFor="let post of classPosts">
                                 <div class="post-head">
                                     <div class="ui grid">
-                                        <div class="two wide column">
+                                        <div class="three wide column">
                                             <a class="avatar">
-                                                <img [src]="post.photo? 
-                        'data:image/jpg;base64,'+post.photo : 'https://semantic-ui.com/images/avatar/small/elliot.jpg'"
+                                                <img [src]="post.userPhoto? 
+                        'data:image/jpg;base64,'+post.userPhoto : 'https://semantic-ui.com/images/avatar/small/elliot.jpg'"
                                                     style="width: 70%;">
                                             </a>
                                             <div class="content">
-                                                <a class="author">{{post.author}}</a>
+                                                <a class="author">{{post.author}}</a><br>
+                                                <sub class="date">{{post.time}}</sub>
                                             </div>
                                         </div>
-                                        <div class="fourteen wide column">{{post.content}}</div>
+                                        <div class="thirteen wide column">
+                                            {{post.content}}
+                                        </div>
                                     </div>
 
                                     <br><br>
-                                    <form action="" class="ui form">
+                                    <form action="" class="ui form" #cmnt="ngForm">
                                         <label for="">
                                             Comments
                                         </label>
-                                        <textarea name="" id="" rows="2" [(ngModel)]="comment"
-                                            name="comment"></textarea>
+                                        <textarea name="" id="" rows="2" [ngModel]="comment" name="comment"></textarea>
                                         <br> <br>
-                                        <button class="ui green button" (click)="postComment(post._id)">Comment</button>
+                                        <button class="btn btn-success"
+                                            (click)="postComment(post._id, cmnt)">Comment</button>
                                     </form>
                                 </div>
                                 <ng-container *ngIf="post.comments">
-                                    <div class="ui comments">
+                                    <div class="cmnts ui comments p-3" style="max-height: 400px; overflow: auto;">
                                         <div class="comment" *ngFor="let comment of post.comments" style="width: 100%;">
                                             <a class="avatar">
                                                 <img
@@ -97,7 +98,7 @@
 
                                                 <a class="author">{{comment.author}}</a>
                                                 <div class="metadata">
-                                                    <div class="date">2 days ago</div>
+                                                    <div class="date">{{comment.time}}</div>
                                                 </div>
                                                 <div class="text">
                                                     {{comment.comment}}

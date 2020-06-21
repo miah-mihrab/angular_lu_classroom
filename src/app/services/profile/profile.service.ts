@@ -10,7 +10,6 @@ export class ProfileService {
 
 
   getProfile(id) {
-    console.log(id, "ID")
     return this.http.get(`http://localhost:5000/profile/${id}`)
   }
   updateUser(id, formVal) {

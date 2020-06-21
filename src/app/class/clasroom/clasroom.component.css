@@ -1,20 +1,11 @@
-#style-10::-webkit-scrollbar {
-  width: 10px;
-  background-color: #F5F5F5;
-}
 
-#style-10::-webkit-scrollbar-thumb {
-  background-color: #AAA;
-  border-radius: 10px;
-  background-image: -webkit-linear-gradient(90deg,
-      rgb(3, 2, 88, 0.5) 100%,
-      transparent)
-}
 
 .classroom-container {
   width: 68%;
 }
-
+.comments::-webkit-scrollbar {
+  width: 0px;
+}
 .banner {
   overflow: hidden;
   height: 20vw;
