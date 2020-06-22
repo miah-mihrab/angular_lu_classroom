@@ -36,8 +36,6 @@ export class ClasroomComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
     this.user = JSON.parse(atob(localStorage.getItem('lu-user')))
     this.userphoto = this.user.photo;
     console.log(this.user)

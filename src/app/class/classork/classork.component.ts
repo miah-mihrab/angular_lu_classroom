@@ -1,6 +1,6 @@
 import { UserClassService } from 'src/app/services/user-class/user-class.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -23,7 +23,10 @@ export class ClassorkComponent implements OnInit {
   classroomId: any;
   user: any;
   allClassworks = [];
-
+  failedSubmission = '';
+  successSubmission = '';
+  assignmentSubmitting: boolean = true;
+  assignmentSubmittingStatus = '';
   constructor(private aRoute: ActivatedRoute, private classService: UserClassService) { }
 
   ngOnInit(): void {
@@ -113,7 +116,9 @@ export class ClassorkComponent implements OnInit {
 
   }
 
-  assignmentSubmission(assignmentId) {
+  assignmentSubmission(form: NgForm, assignmentId) {
+    this.assignmentSubmittingStatus = 'assignmentSubmitting';
+
     let assignment = this.submitAssignment.value;
     let formData = new FormData();
 
@@ -123,14 +128,30 @@ export class ClassorkComponent implements OnInit {
     formData.append('assignmentname', assignment.name)
     formData.append('assignmentId', assignmentId)
     formData.append('userId', this.user._id)
-    formData.append('file', this.file)
+    formData.append('file', this.file);
+
+
     this.classService
       .submitAssignment(formData, this.classroomId)
       .subscribe(res => {
-        console.log(res)
+        if (res['error']) {
+          this.assignmentSubmittingStatus = 'alreadySubmited';
+        } else {
+          this.assignmentSubmittingStatus = 'assignmentSubmitted';
+        }
+        setTimeout(() => {
+          this.assignmentSubmittingStatus = ''
+        }, 2000);
       }, (err: Response) => {
-        console.log(err)
+        this.assignmentSubmittingStatus = '';
+        this.failedSubmission = 'Something went wrong while submitting';
+
+        setTimeout(() => {
+          this.failedSubmission = ''
+        }, 2000);
       })
+
+    form.reset();
     // formData.append('assignmentname', classwork.assignmentname);
     // formData.append('details', classwork.details)
   }

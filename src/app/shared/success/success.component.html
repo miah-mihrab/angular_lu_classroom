@@ -1,1 +1,15 @@
-<p>success works!</p>
+<ng-container *ngIf="message==='assignmentSubmitting'">
+    <div class="alert alert-primary">
+        <i class="circle notch icon large loading"></i> Your assignment is being submitted
+    </div>
+</ng-container>
+<ng-container *ngIf="message==='assignmentSubmitted'">
+    <div class="alert alert-success">
+        Assignment submitted successfully
+    </div>
+</ng-container>
+<ng-container *ngIf="message==='alreadySubmited'">
+    <div class="alert alert-warning">
+        Your already submitted your assignment. Please contact with course teacher.
+    </div>
+</ng-container>

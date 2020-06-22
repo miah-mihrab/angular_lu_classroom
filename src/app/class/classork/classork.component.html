@@ -100,7 +100,13 @@
                                 <span class="close" data-dismiss="modal">&times;</span>
                             </div>
                             <div class="body">
-                                <form class="p-3" [formGroup]="submitAssignment">
+                                {{assignmentSubmittingStatus}}
+                                <app-success [message]="assignmentSubmittingStatus ? assignmentSubmittingStatus : ''">
+                                </app-success>
+
+                                <app-errors [message]="failedSubmission"></app-errors>
+
+                                <form class="p-3" [formGroup]="submitAssignment" #submitAssignmentForm>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="assignmentsubmission"
                                             value="Assignment Submission" disabled>
@@ -120,7 +126,7 @@
                                             name="file" (change)="fileUpload($event)" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary"
-                                        (click)="assignmentSubmission(classwork._id)">Assign</button>
+                                        (click)="assignmentSubmission(submitAssignmentForm, classwork._id)">Submit</button>
                                 </form>
 
                             </div>

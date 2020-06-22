@@ -9,32 +9,32 @@ export class UserClassService {
   constructor(private http: HttpClient) { }
 
   getClass(id) {
-    return this.http.get(`http://localhost:5000/classroom/${id}`);
+    return this.http.get(`https://lu-classroom.herokuapp.com/classroom/${id}`);
   }
   createClassPost(post) {
     console.log(post)
-    return this.http.post(`http://localhost:5000/classroom/${post.get('class')}`, post)
+    return this.http.post(`https://lu-classroom.herokuapp.com/classroom/${post.get('class')}`, post)
   }
 
   updatePostWithComment(comment) {
-    return this.http.patch(`http://localhost:5000/classroom/${comment.get('postID')}`, comment)
+    return this.http.patch(`https://lu-classroom.herokuapp.com/classroom/${comment.get('postID')}`, comment)
   }
 
   createClasswork(classwork, classroomId) {
     console.log(classroomId)
-    return this.http.post(`http://localhost:5000/classroom/${classroomId}/classwork`, classwork)
+    return this.http.post(`https://lu-classroom.herokuapp.com/classroom/${classroomId}/classwork`, classwork)
   }
   getClassworks(classroomId) {
-    return this.http.get(`http://localhost:5000/classroom/${classroomId}/classwork`)
+    return this.http.get(`https://lu-classroom.herokuapp.com/classroom/${classroomId}/classwork`)
   }
 
   deleteAssignemnt(id) {
-    return this.http.delete(`http://localhost:5000/classroom/${id}/classwork`);
+    return this.http.delete(`https://lu-classroom.herokuapp.com/classroom/${id}/classwork`);
   }
 
   // STUDENT
   submitAssignment(assignment, classroomId) {
-    return this.http.post(`http://localhost:5000/classroom/${classroomId}/classwork`, assignment)
+    return this.http.post(`https://lu-classroom.herokuapp.com/classroom/${classroomId}/classwork`, assignment)
   }
 
 }
