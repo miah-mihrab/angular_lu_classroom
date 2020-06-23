@@ -14,7 +14,6 @@ declare var $: any;
 })
 export class ProfileComponent implements OnInit {
 
-
   programNames;
   userForm: FormGroup;
   passwordForm = new FormGroup({

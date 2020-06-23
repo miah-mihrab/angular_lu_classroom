@@ -12,6 +12,7 @@ import { NgForm } from '@angular/forms';
 
 export class ClasroomComponent implements OnInit {
 
+  loading: boolean = true;
   childrenRoute: boolean = false;
   id: any;
   classContent: any;
@@ -49,7 +50,7 @@ export class ClasroomComponent implements OnInit {
         this.classPosts.reverse();
         setTimeout(() => {
           let allComments = document.querySelectorAll('.cmnts');
-
+          this.loading = false;
           allComments.forEach(e => {
             console.log('here')
             e.scrollTop = e.scrollHeight - e.clientHeight;

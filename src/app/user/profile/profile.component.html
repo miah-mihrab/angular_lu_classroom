@@ -1,3 +1,13 @@
+<!-- LOADING -->
+<ng-container *ngIf="loading">
+    <div id="pulse-wrapper">
+        <div id="pulse">
+            <span></span> <!-- Wave 1 -->
+            <span></span> <!-- Wave 2 -->
+        </div>
+    </div>
+</ng-container>
+
 <div class="container" *ngIf="updateMessage!=''">
     <div class="alert alert-success">{{updateMessage}}</div>
 </div>
@@ -8,7 +18,7 @@
 <button class="ui compact icon button" style="position: fixed; top: 50%;" (click)="toggleSideBar()">
     <i class="right arrow icon"></i>
 </button>
-<div class="ui sidebar inverted vertical menu">
+<div class="ui sidebar inverted vertical menu visible">
     <a [routerLink]="['']" class="item"><i class="home icon"></i> Home</a>
     <a href="/account/userID" class="item" [routerLink]="['./']"><i class="icon settings"></i> Settings</a>
     <a href="" id="edit-profile" class="item"><i class="fas fa-user-cog"></i> Edit Profile</a>
@@ -60,152 +70,155 @@
         <div class="text-center"><i class="bars icon" (click)="toggleSideBar()"></i><label for="">switch
                 menu</label>
         </div>
-        <div class="personal__info">
-            <div class="overview_section mb-4">
-                <h4>Basic Information</h4>
-                <br><br>
-                <form action="" [formGroup]="userForm" class="ui form" *ngIf="!loading" style="overflow: hidden;">
-                    <div class="field">
-                        <label>First Name</label>
-                        <input type="text" name="first-name" placeholder="First Name" formControlName="firstname">
-                    </div>
-                    <div class="field">
-                        <label>Last Name</label>
-                        <input type="text" name="last-name" placeholder="Last Name" formControlName="lastname">
-                    </div>
-                    <div class="field">
-                        <label>Email</label>
-                        <input type="text" name="email" placeholder="email" formControlName="email">
-                    </div>
-                    <div class="field">
-                        <label>ID</label>
-                        <input type="text" name="id" placeholder="id" formControlName="id">
-                    </div>
-                    <div class="field">
-                        <label for="department" class="form__label">Department</label>
+        <ng-container *ngIf="!loading">
+            <div class="personal__info">
+                <div class="overview_section mb-4">
+                    <h4>Basic Information</h4>
+                    <br><br>
+                    <form action="" [formGroup]="userForm" class="ui form" *ngIf="!loading" style="overflow: hidden;">
+                        <div class="field">
+                            <label>First Name</label>
+                            <input type="text" name="first-name" placeholder="First Name" formControlName="firstname">
+                        </div>
+                        <div class="field">
+                            <label>Last Name</label>
+                            <input type="text" name="last-name" placeholder="Last Name" formControlName="lastname">
+                        </div>
+                        <div class="field">
+                            <label>Email</label>
+                            <input type="text" name="email" placeholder="email" formControlName="email">
+                        </div>
+                        <div class="field">
+                            <label>ID</label>
+                            <input type="text" name="id" placeholder="id" formControlName="id">
+                        </div>
+                        <div class="field">
+                            <label for="department" class="form__label">Department</label>
 
-                        <select class="form-control" name="department" id="department" formControlName="department">
-                            <option [value]="item" *ngFor="let item of programNames">
-                                {{item}}</option>
-                        </select>
+                            <select class="form-control" name="department" id="department" formControlName="department">
+                                <option [value]="item" *ngFor="let item of programNames">
+                                    {{item}}</option>
+                            </select>
 
-                        <div *ngIf="userForm.get('department').invalid && (userForm.get('department').dirty || userForm.get('department').touched)"
-                            class="alert alert-danger">
-                            <div *ngIf="userForm.get('department').errors.required">
-                                * Department is required.
+                            <div *ngIf="userForm.get('department').invalid && (userForm.get('department').dirty || userForm.get('department').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="userForm.get('department').errors.required">
+                                    * Department is required.
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- IF STUDENT -->
-                    <ng-container *ngIf="user['profession']==='Student'">
-                        <div class="field">
-                            <label>Batch</label>
-                            <input type="text" name="batch" placeholder="batch" formControlName="batch">
-                        </div>
-                        <div class="field">
-                            <label>Section</label>
-                            <input type="text" name="section" placeholder="section" formControlName="section">
-                        </div>
-                        <div class="field">
-                            <label>Semester</label>
-                            <input type="text" name="semester" placeholder="semester" formControlName="semester">
-                        </div>
-                        <div class="field">
-                            <label>DOB</label>
-                            <input type="date" name="dob" placeholder="dob" formControlName="dob">
-                        </div>
-                    </ng-container>
+                        <!-- IF STUDENT -->
+                        <ng-container *ngIf="user['profession']==='Student'">
+                            <div class="field">
+                                <label>Batch</label>
+                                <input type="text" name="batch" placeholder="batch" formControlName="batch">
+                            </div>
+                            <div class="field">
+                                <label>Section</label>
+                                <input type="text" name="section" placeholder="section" formControlName="section">
+                            </div>
+                            <div class="field">
+                                <label>Semester</label>
+                                <input type="text" name="semester" placeholder="semester" formControlName="semester">
+                            </div>
+                            <div class="field">
+                                <label>DOB</label>
+                                <input type="date" name="dob" placeholder="dob" formControlName="dob">
+                            </div>
+                        </ng-container>
 
 
-                    <input type="file" (change)="imageChange($event)">
-                    <ng-container *ngIf='!updating'>
-                        <button class="ui inverted green button float-right" (click)="updateUser()">Update</button>
-                    </ng-container>
-                    <ng-container *ngIf='updating'>
-                        <button class="ui inverted green loading button float-right">Loading</button>
-                    </ng-container>
-                </form>
+                        <input type="file" (change)="imageChange($event)">
+                        <ng-container *ngIf='!updating'>
+                            <button class="ui inverted green button float-right" (click)="updateUser()">Update</button>
+                        </ng-container>
+                        <ng-container *ngIf='updating'>
+                            <button class="ui inverted green loading button float-right">Loading</button>
+                        </ng-container>
+                    </form>
+                </div>
+                <hr>
+                <div class="password_portion mt-4">
+
+                    <form [formGroup]="passwordForm">
+
+
+
+                        <div class="form-group">
+                            <label for="">Old Password</label>
+                            <div class="input-group mb-3">
+                                <input type="password" class="form-control" formControlName="old_password"
+                                    name="old_pass" id="oldPass" required>
+                                <div class="input-group-append" (click)="showPass('oldPass')">
+                                    <span class="input-group-text"><i class="eye slash icon"></i></span>
+                                </div>
+                            </div>
+                            <div style="position: relative; text-align: left;"
+                                *ngIf="passwordForm.get('old_password').invalid && (passwordForm.get('old_password').dirty || passwordForm.get('old_password').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="passwordForm.get('old_password').errors.required">
+                                    * Old Passowrd is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">New Password</label>
+                            <div class="input-group mb-3">
+                                <input type="password" class="form-control" id="new_pass" formControlName="new_password"
+                                    name="new_pass" required>
+                                <div class="input-group-append" (click)="showPass('new_pass')">
+                                    <span class="input-group-text"><i class="eye slash icon"></i></span>
+                                </div>
+                            </div>
+                            <div style="position: relative; text-align: left;"
+                                *ngIf="passwordForm.get('new_password').invalid && (passwordForm.get('new_password').dirty || passwordForm.get('new_password').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="passwordForm.get('new_password').errors.required">
+                                    * New Passowrd is required.
+                                </div>
+                                <div *ngIf="passwordForm.get('new_password').errors.pattern">
+                                    * Password must be combination of uppercase and lowercase letters, numbers and
+                                    special
+                                    characters and min length is six
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Confirm Password</label>
+                            <div class="input-group mb-3">
+                                <input type="password" class="form-control" formControlName="confirm_password"
+                                    name="confirm_pass" id="confirm_pass">
+                                <div class="input-group-append" (click)="showPass('confirm_pass')">
+                                    <span class="input-group-text"><i class="eye slash icon"></i></span>
+                                </div>
+                            </div>
+
+
+                            <div *ngIf="passwordForm.value.new_password!=passwordForm.value.confirm_password && (passwordForm.get('confirm_password').touched || passwordForm.get('confirm_password').dirty)"
+                                class="alert alert-danger" style="position: relative;">
+                                * Password Should match
+                            </div>
+                            <div style="position: relative; text-align: left;"
+                                *ngIf="passwordForm.get('confirm_password').invalid && (passwordForm.get('confirm_password').dirty || passwordForm.get('confirm_password').touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="passwordForm.get('confirm_password').errors.required">
+                                    * Confirm Passowrd is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <ng-container *ngIf='!updatingPass'>
+                            <button class="ui inverted green button float-right" (click)="updatePassword()">Update
+                                Password</button>
+                        </ng-container>
+                        <ng-container *ngIf='updatingPass'>
+                            <button class="ui inverted green loading button float-right">Loading</button>
+                        </ng-container>
+                    </form>
+                </div>
             </div>
-            <hr>
-            <div class="password_portion mt-4">
-
-                <form [formGroup]="passwordForm">
-
-
-
-                    <div class="form-group">
-                        <label for="">Old Password</label>
-                        <div class="input-group mb-3">
-                            <input type="password" class="form-control" formControlName="old_password" name="old_pass"
-                                id="oldPass" required>
-                            <div class="input-group-append" (click)="showPass('oldPass')">
-                                <span class="input-group-text"><i class="eye slash icon"></i></span>
-                            </div>
-                        </div>
-                        <div style="position: relative; text-align: left;"
-                            *ngIf="passwordForm.get('old_password').invalid && (passwordForm.get('old_password').dirty || passwordForm.get('old_password').touched)"
-                            class="alert alert-danger">
-                            <div *ngIf="passwordForm.get('old_password').errors.required">
-                                * Old Passowrd is required.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="">New Password</label>
-                        <div class="input-group mb-3">
-                            <input type="password" class="form-control" id="new_pass" formControlName="new_password"
-                                name="new_pass" required>
-                            <div class="input-group-append" (click)="showPass('new_pass')">
-                                <span class="input-group-text"><i class="eye slash icon"></i></span>
-                            </div>
-                        </div>
-                        <div style="position: relative; text-align: left;"
-                            *ngIf="passwordForm.get('new_password').invalid && (passwordForm.get('new_password').dirty || passwordForm.get('new_password').touched)"
-                            class="alert alert-danger">
-                            <div *ngIf="passwordForm.get('new_password').errors.required">
-                                * New Passowrd is required.
-                            </div>
-                            <div *ngIf="passwordForm.get('new_password').errors.pattern">
-                                * Password must be combination of uppercase and lowercase letters, numbers and special
-                                characters and min length is six
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="">Confirm Password</label>
-                        <div class="input-group mb-3">
-                            <input type="password" class="form-control" formControlName="confirm_password"
-                                name="confirm_pass" id="confirm_pass">
-                            <div class="input-group-append" (click)="showPass('confirm_pass')">
-                                <span class="input-group-text"><i class="eye slash icon"></i></span>
-                            </div>
-                        </div>
-
-
-                        <div *ngIf="passwordForm.value.new_password!=passwordForm.value.confirm_password && (passwordForm.get('confirm_password').touched || passwordForm.get('confirm_password').dirty)"
-                            class="alert alert-danger" style="position: relative;">
-                            * Password Should match
-                        </div>
-                        <div style="position: relative; text-align: left;"
-                            *ngIf="passwordForm.get('confirm_password').invalid && (passwordForm.get('confirm_password').dirty || passwordForm.get('confirm_password').touched)"
-                            class="alert alert-danger">
-                            <div *ngIf="passwordForm.get('confirm_password').errors.required">
-                                * Confirm Passowrd is required.
-                            </div>
-                        </div>
-                    </div>
-
-                    <ng-container *ngIf='!updatingPass'>
-                        <button class="ui inverted green button float-right" (click)="updatePassword()">Update
-                            Password</button>
-                    </ng-container>
-                    <ng-container *ngIf='updatingPass'>
-                        <button class="ui inverted green loading button float-right">Loading</button>
-                    </ng-container>
-                </form>
-            </div>
-        </div>
+        </ng-container>
     </div>
     <router-outlet *ngIf="showResult===true"></router-outlet>
 </div>

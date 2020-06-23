@@ -1,5 +1,4 @@
 <div class="container-fluid" style="min-height: 100%; overflow: auto;">
-
     <div class="row">
         <div class="col-lg-7 d-none-md">
             <img src="../../../assets/images/lu-theme5.svg" class=" " alt="...">
@@ -11,11 +10,12 @@
                         <img src="../../../assets/images/lu-logo-2.png" alt="">
                     </div>
                     <div class="main-div">
-                        <app-errors [message]="errorMessage!=''?errorMessage:''"></app-errors>
                         <div class="panel">
                             <h1 class="text-lead text text-secondary pt-3 pb-5">Registration Form</h1>
                         </div>
                         <form id="signup" [formGroup]="signupForm">
+                            <app-success [message]="signupStatus"></app-success>
+                            <app-errors [message]="errorMessage"></app-errors>
                             <div class="form-group row">
                                 <div class="col-md-6">
                                     <label for="fname" class="form__label">First Name</label>

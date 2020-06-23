@@ -13,3 +13,34 @@
         Your already submitted your assignment. Please contact with course teacher.
     </div>
 </ng-container>
+<ng-container *ngIf="message==='registeringAccount'">
+    <div class="alert alert-primary">
+        <i class="circle notch icon large loading"></i> We are regestering your account. Please wait it may take upto 1
+        minute
+    </div>
+</ng-container>
+<ng-container *ngIf="message==='accountRegistered'">
+    <div class="alert alert-success">
+        Congratulation Your account has been registered
+    </div>
+</ng-container>
+<ng-container *ngIf="message==='joiningClass'">
+    <div class="alert alert-primary">
+        <i class="circle notch icon large loading"></i> We are joining you to the class.
+    </div>
+</ng-container>
+<ng-container *ngIf="message==='creatingClass'">
+    <div class="alert alert-primary">
+        <i class="circle notch icon large loading"></i>We are creating a class for you.
+    </div>
+</ng-container>
+<ng-container *ngIf="message==='joinedToClass'">
+    <div class="alert alert-success">
+        You are enrolled to the class.
+    </div>
+</ng-container>
+<ng-container *ngIf="message==='createdClass'">
+    <div class="alert alert-success">
+        Your class has been created.
+    </div>
+</ng-container>

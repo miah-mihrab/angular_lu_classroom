@@ -1,101 +1,118 @@
-<!-- NAVBAR -->
-<app-navbar [username]="username" [userphoto]="userphoto"></app-navbar>
-
-
-
-<!-- CONTENTS -->
-<ng-container *ngIf="classes.length===0">
-    <div class="ui placeholder segment" style="height: 100vh;">
-        <ng-container *ngIf="user.profession==='Teacher'">
-            <div class="ui icon header">
-                <i class="book icon"></i>
-                You did not create any class yet.
-            </div>
-            <div class="ui primary button" data-toggle="modal" data-target="#createClassModal" id="create_class-btn">
-                Create
-                Class</div>
-        </ng-container>
-        <ng-container *ngIf="user.profession==='Student'">
-            <div class="ui icon header">
-                <i class="book icon"></i>
-                You did not join any class yet.
-            </div>
-            <div class="ui primary button" data-toggle="modal" data-target="#joinClassModal" id="join_class-btn">
-                Join Class</div>
-        </ng-container>
+<!-- LOADING -->
+<ng-container *ngIf="loading">
+    <div id="pulse-wrapper">
+        <div id="pulse">
+            <span></span> <!-- Wave 1 -->
+            <span></span> <!-- Wave 2 -->
+        </div>
     </div>
 </ng-container>
-<div class="ui container mt-5" *ngIf="classes.length>0">
-    <div class="ui grid">
-        <ng-container *ngFor="let class of classes">
-            <class-card [class]="class" (deleteClass)="deleteClass($event)"></class-card>
-        </ng-container>
+
+
+
+<!-- NAVBAR -->
+<app-navbar [username]="username" [userphoto]="userphoto"></app-navbar>
+<ng-container *ngIf="!loading">
+    <app-success [message]="creatingClass"></app-success>
+    <app-success [message]="joiningClass"></app-success>
+
+    <app-errors [message]="failedInClassService"></app-errors>
+
+
+    <!-- CONTENTS -->
+    <ng-container *ngIf="classes.length===0">
+        <div class="ui placeholder segment" style="height: 100vh;">
+            <ng-container *ngIf="user.profession==='Teacher'">
+                <div class="ui icon header">
+                    <i class="book icon"></i>
+                    You did not create any class yet.
+                </div>
+                <div class="ui primary button" data-toggle="modal" data-target="#createClassModal"
+                    id="create_class-btn">
+                    Create
+                    Class</div>
+            </ng-container>
+            <ng-container *ngIf="user.profession==='Student'">
+                <div class="ui icon header">
+                    <i class="book icon"></i>
+                    You did not join any class yet.
+                </div>
+                <div class="ui primary button" data-toggle="modal" data-target="#joinClassModal" id="join_class-btn">
+                    Join Class</div>
+            </ng-container>
+        </div>
+    </ng-container>
+    <div class="ui container mt-5" *ngIf="classes.length>0">
+        <div class="ui grid">
+            <ng-container *ngFor="let class of classes">
+                <class-card [class]="class" (deleteClass)="deleteClass($event)"></class-card>
+            </ng-container>
+        </div>
     </div>
-</div>
 
 
-<!-- CREATE CLASS -->
-<div class="modal fade" id="createClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: white;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createClassLabel">Create Class</h5>
+    <!-- CREATE CLASS -->
+    <div class="modal fade" id="createClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: white;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createClassLabel">Create Class</h5>
 
-                <span class="close" data-dismiss="modal">&times;</span>
+                    <span class="close" data-dismiss="modal">&times;</span>
 
-            </div>
-            <div class="body">
-                <form action="" method="POST" class="p-3" [formGroup]="createClassForm">
+                </div>
+                <div class="body">
+                    <form action="" method="POST" class="p-3" [formGroup]="createClassForm">
+                        <div class="form-group">
+                            <label for="classname">Class Name (required)</label>
+                            <input type="text" class="form-control" name="classname" placeholder="Class Name"
+                                formControlName="classname">
+                        </div>
+                        <div class="form-group">
+                            <label for="section">Batch & Section</label>
+                            <input type="text" class="form-control" name="section" placeholder="Example: 1 A"
+                                formControlName="section">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" class="form-control" name="subject" placeholder="Subject"
+                                formControlName="subject">
+                        </div>
+                        <button class="btn btn-primary" (click)="createClass()" data-dismiss="modal">Create</button>
 
-                    <div class="form-group">
-                        <label for="classname">Class Name (required)</label>
-                        <input type="text" class="form-control" name="classname" placeholder="Class Name"
-                            formControlName="classname">
-                    </div>
-                    <div class="form-group">
-                        <label for="section">Section</label>
-                        <input type="text" class="form-control" name="section" placeholder="Section"
-                            formControlName="section">
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" class="form-control" name="subject" placeholder="Subject"
-                            formControlName="subject">
-                    </div>
-                    <button class="btn btn-primary" (click)="createClass()" data-dismiss="modal">Create</button>
+                    </form>
 
-                </form>
-
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="modal fade" id="joinClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: white;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createClassLabel">Create Class</h5>
+    <div class="modal fade" id="joinClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: white;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createClassLabel">Create Class</h5>
 
-                <span class="close" data-dismiss="modal">&times;</span>
+                    <span class="close" data-dismiss="modal">&times;</span>
 
-            </div>
-            <div class="body">
-                <form action="" method="POST" class="p-3" [formGroup]="joinClassForm">
+                </div>
+                <div class="body">
+                    <form action="" method="POST" class="p-3" [formGroup]="joinClassForm">
 
-                    <div class="form-group">
-                        <label for="classname">Class Name (required)</label>
-                        <input type="text" class="form-control" name="roomCode" placeholder="Room Code"
-                            formControlName="roomCode">
-                    </div>
-                    <button class="btn btn-primary" (click)="joinClass()" data-dismiss="modal">Join</button>
+                        <div class="form-group">
+                            <label for="classname">Class Name (required)</label>
+                            <input type="text" class="form-control" name="roomCode" placeholder="Room Code"
+                                formControlName="roomCode">
+                        </div>
+                        <button class="btn btn-primary" (click)="joinClass()" data-dismiss="modal">Join</button>
 
-                </form>
+                    </form>
 
+                </div>
             </div>
         </div>
     </div>
-</div>
+</ng-container>

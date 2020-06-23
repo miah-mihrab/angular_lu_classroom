@@ -18,10 +18,9 @@ export class HomeService {
     return this.http.post('https://lu-classroom.herokuapp.com/home', classInfo)
   }
   joinClass(code: any, _id: any) {
-    return this.http.post('https://lu-classroom.herokuapp.com/home', { roomcode: code.roomCode, _id })
+    return this.http.post('http://localhost:5000/home', { roomcode: code.roomCode, _id })
   }
   deleteClass(classId: string, _id: string, profession: string) {
-    console.log(profession, classId, _id)
     return this.http.delete(`https://lu-classroom.herokuapp.com/delete-class/${classId}?profession=${profession}&user=${_id}`)
   }
 }

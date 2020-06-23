@@ -16,7 +16,7 @@ export class SignUpComponent implements OnInit {
   signupForm: FormGroup;
   programNames;
   errorMessage = ''
-
+  signupStatus = '';
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.signupForm = this.fb.group({
 
@@ -55,16 +55,32 @@ export class SignUpComponent implements OnInit {
   }
 
   registerNewAccount() {
+    this.signupStatus = 'registeringAccount';
     // console.log(this.signupForm.value)
     this.authService.signup(this.signupForm.value)
       .subscribe(res => {
         let user = btoa(JSON.stringify(res))
-        console.log(res, "SIGN IN")
-        localStorage.setItem('lu-user', user)
-        this.router.navigate([''])
+        // console.log(res, "SIGN IN");
+        localStorage.setItem('lu-user', user);
+        this.signupStatus = 'accountRegistered';
+        setTimeout(() => {
+          this.signupStatus = '';
+          this.router.navigate([''])
+        }, 1000)
+
 
       }, (err: Response) => {
-        console.log(err)
+        this.signupStatus = ''
+        // console.log(err)
+        if (err['error'].message === 'Duplicate key entered') {
+          this.errorMessage = 'Email already in use'
+        } else {
+          this.errorMessage = "Something went wrong while registering.";
+        }
+        setTimeout(() => {
+          this.errorMessage = ''
+        }, 2000)
+
       })
   }
 
