@@ -12,14 +12,14 @@
                     <input type="text" class="form-control" placeholder="Section" [(ngModel)]="section" name="section">
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-12">
                 <select class="custom-select" [(ngModel)]="programName" name="programName">
                     <option *ngFor="let item of programNames" [value]="item">{{item}}</option>
                 </select>
             </div>
         </div>
 
-        <button class="btn btn-primary" (click)="search()">Search</button>
+        <button class="btn btn-primary mt-2" (click)="search()">Search</button>
 
     </form>
 </div>

@@ -13,10 +13,10 @@
 <!-- NAVBAR -->
 <app-navbar [username]="username" [userphoto]="userphoto"></app-navbar>
 <ng-container *ngIf="!loading">
-    <app-success [message]="creatingClass"></app-success>
-    <app-success [message]="joiningClass"></app-success>
+    <app-success [message]="confirmation"></app-success>
 
     <app-errors [message]="failedInClassService"></app-errors>
+    <app-confirmation (confirmDeleting)="confirmDeleteClass($event)"></app-confirmation>
 
 
     <!-- CONTENTS -->
@@ -115,4 +115,5 @@
             </div>
         </div>
     </div>
+
 </ng-container>

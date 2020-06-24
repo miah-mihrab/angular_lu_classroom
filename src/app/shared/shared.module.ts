@@ -5,15 +5,16 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ClassCardComponent } from './class-card/class-card.component';
 import { RouterModule } from '@angular/router';
 import { ErrorsComponent } from './errors/errors.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 
 
 @NgModule({
-  declarations: [NavbarComponent, ClassCardComponent, ErrorsComponent, SuccessComponent],
+  declarations: [NavbarComponent, ClassCardComponent, ErrorsComponent, SuccessComponent, ConfirmationComponent],
   imports: [
     CommonModule,
     RouterModule
   ],
-  exports: [NavbarComponent, ClassCardComponent, ErrorsComponent, SuccessComponent]
+  exports: [NavbarComponent, ClassCardComponent, ErrorsComponent, SuccessComponent, ConfirmationComponent]
 })
 export class SharedModule { }

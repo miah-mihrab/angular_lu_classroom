@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HomeService } from './../../services/Home/home.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-
+declare var $: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,8 +23,11 @@ export class HomeComponent implements OnInit {
 
   loading: boolean = true;
   classes: any = []
+  classDeleteId;
   creatingClass = '';
   joiningClass = '';
+  confirmation = '';
+
   failedInClassService = '';
   constructor(private homeService: HomeService, private router: Router, private location: Location) {
     this.router.events.subscribe(() => {
@@ -58,7 +61,7 @@ export class HomeComponent implements OnInit {
 
   createClass() {
 
-    this.creatingClass = 'creatingClasss';
+    this.confirmation = 'creatingClasss';
     this.createClassForm.value.author_name = `${this.user.firstname} ${this.user.lastname}`;
     this.createClassForm.value.author_id = `${this.user._id}`;
 
@@ -67,10 +70,10 @@ export class HomeComponent implements OnInit {
       .subscribe((res) => {
         console.log(res)
         this.classes.push(res)
-        this.creatingClass = 'createdClass';
+        this.confirmation = 'createdClass';
 
         setTimeout(() => {
-          this.creatingClass = ''
+          this.confirmation = ''
         }, 2000)
 
       }, err => {
@@ -83,19 +86,19 @@ export class HomeComponent implements OnInit {
     // this.createClassForm.reset();
   }
   joinClass() {
-    this.joiningClass = 'joiningClass';
+    this.confirmation = 'joiningClass';
     console.log(this.joinClassForm.value, this.user._id)
     this.homeService.joinClass(this.joinClassForm.value, this.user._id).subscribe(res => {
       if (res['success'] != false) {
         console.log(res, "CLASS RESPONSE")
-        this.joiningClass = 'joinedToClass';
+        this.confirmation = 'joinedToClass';
         setTimeout(() => {
-          this.joiningClass = ''
+          this.confirmation = ''
           this.classes.push(res['class'])
 
         }, 2000)
       } else {
-        this.joiningClass = ''
+        this.confirmation = ''
         this.failedInClassService = res['message'];
         setTimeout(() => {
           this.failedInClassService = ''
@@ -104,7 +107,7 @@ export class HomeComponent implements OnInit {
 
     }, err => {
       console.log(err)
-      this.joiningClass = ''
+      this.confirmation = ''
 
       this.failedInClassService = 'Something went wrong while joining you to the class. Please check the room ID';
       setTimeout(() => {
@@ -114,10 +117,35 @@ export class HomeComponent implements OnInit {
   }
 
   deleteClass(classId) {
-    this.homeService.deleteClass(classId, this.user._id, this.user.profession).subscribe(res => {
-      console.log("DELETED")
-    }, (err: Response) => {
-      console.log(err)
-    })
+    this.classDeleteId = classId;
+    console.log(this.classDeleteId)
+
+  }
+
+  confirmDeleteClass(confirmation) {
+    if (confirmation) {
+      this.homeService.deleteClass(this.classDeleteId, this.user._id, this.user.profession).subscribe(res => {
+
+        for (let i = 0; i < this.classes.length; i++) {
+          if (this.classes[i]._id === this.classDeleteId) {
+            this.classes.splice(i, 1);
+            break;
+          }
+        }
+        this.confirmation = 'classDeleted';
+
+        setTimeout(() => {
+          this.confirmation = ''
+        }, 2000);
+
+
+      }, (err: Response) => {
+        this.failedInClassService = 'Something went wrong while deleting the class'
+
+        setTimeout(() => {
+          this.failedInClassService = ''
+        }, 2000)
+      })
+    }
   }
 }

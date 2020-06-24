@@ -64,7 +64,6 @@ export class ProfileComponent implements OnInit {
     this.aRoute.params.subscribe(param => {
       this.id = param.id;
       this.profileService.getProfile(this.id).subscribe(res => {
-        console.log(res)
         this.userForm = new FormGroup({
           firstname: new FormControl(res['firstname']),
           lastname: new FormControl(res['lastname']),
@@ -185,5 +184,19 @@ export class ProfileComponent implements OnInit {
       dom.type = 'password'
     }
     console.log(dom.type)
+  }
+
+
+
+  openNav() {
+    document.getElementById('openbtn').style.visibility = "hidden"
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
+
+  closeNav() {
+    document.getElementById('openbtn').style.visibility = "visible"
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
   }
 }

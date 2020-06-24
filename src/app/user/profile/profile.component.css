@@ -16,24 +16,6 @@
     background-image: linear-gradient(to bottom, #7dd56f, #28b487);
 }
 
-.nav_el {
-    display: block;
-    margin-top: 10px;
-    cursor: pointer;
-    font-size: 1.3rem;
-    color: white;
-}
-
-.nav_el a {
-    color: white !important;
-    text-decoration: none !important;
-    font-size: 1.3rem;
-}
-
-.nav_el:hover a {
-    margin-left: 10px;
-    transition: 0.2s all ease-in-out;
-}
 
 .nav_el a:active .nav_el {
     border-right: 1px solid red;
@@ -141,12 +123,65 @@
 .alert--error {
     background-color: #eb4d4b;
 }
-
-.sidebar{
-    background-image: linear-gradient(to bottom, #7dd56f, #28b487) !important;
-}
-
 .dropdown-toggle::after {
     display: none !important;
  
+}
+
+
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to top, #200952, #3AB89F) !important;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  padding-bottom: 10px;
+}
+
+.sidebar a {
+  padding: 10px;
+  text-decoration: none;
+  font-size: 18px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #dddddd;
+  color: #eeeeee;
+  display: block;
+  transition: 0.3s;
+}
+.sidebar span{
+    margin-top: 10px;
+    color: white;
+    cursor: pointer
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #3466D5;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+#openbtn:hover {
+  background-color: #5976b3;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
 }

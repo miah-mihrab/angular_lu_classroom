@@ -21,8 +21,10 @@
         <div class="tiny ui buttons right floated">
             <button class="ui inverted primary button" [routerLink]="['classroom', class._id]">Enter</button>
             <div class="or" data-text="or"></div>
-            <button class="ui inverted red button" (click)="delete(class._id)">Delete</button>
+            <button class="ui inverted red button" data-toggle="modal" data-target="#confirmationModal"
+                (click)="delete(class._id)">Delete</button>
         </div>
+        <!-- (click)="delete(class._id)" -->
     </div>
 
 </div>
