@@ -25,7 +25,6 @@ export class ClassRoutineComponent implements OnInit {
 
   ngOnInit(): void {
     this.programNames = Object.keys(this.programsNo)
-    console.log(this.programNames)
     this.user = JSON.parse(atob(localStorage.getItem('lu-user')));
     this.section = this.user.section;
     this.semester = this.user.semester;
@@ -40,7 +39,13 @@ export class ClassRoutineComponent implements OnInit {
     this.failedToFetchRoutine = false;
 
     this.program = this.programsNo[this.programName];
-    this.getClassRoutine(this.program)
+    console.log(this.program)
+    if (this.program) {
+      this.getClassRoutine(this.program)
+    } else {
+      this.fetchingRoutine = false
+      this.failedToFetchRoutine = true;
+    }
   }
 
 
@@ -55,7 +60,9 @@ export class ClassRoutineComponent implements OnInit {
 
     async function getRoutine(cb) {
 
+      document.querySelector('.routine-div').innerHTML = ''
       let routine = [];
+
       let data = `action=get-event-feed&program=${prg}&section=${sem_sect}`
       let xhr = new XMLHttpRequest();
       xhr.open('post', 'https://www.lus.ac.bd/wp-admin/admin-ajax.php', true);
@@ -87,7 +94,7 @@ export class ClassRoutineComponent implements OnInit {
         let h3 = document.createElement('h3');
 
         h3.classList.add('day', 'text-center')
-        document.querySelector('.container').appendChild(h3);
+        document.querySelector('.routine-div').appendChild(h3);
         let row = routineArray.length;
         let col = 4;
         let table = document.createElement('table');
@@ -157,7 +164,7 @@ export class ClassRoutineComponent implements OnInit {
           td.innerHTML = teacher[0]
           td = tr.insertCell(4);
           td.innerHTML = routineArray[i].location
-          document.querySelector('.container').appendChild(table);
+          document.querySelector('.routine-div').appendChild(table);
         }
       } else {
         this.noRoutineFound = true;

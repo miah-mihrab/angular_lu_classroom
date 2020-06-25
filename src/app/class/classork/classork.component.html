@@ -29,117 +29,124 @@
         <h4 class="text-center">No classwork assigned yet</h4>
     </ng-container>
     <ng-container *ngIf="allClassworks.length>0">
-        <table class="table table-striped table-primary mt-4" style="border: 0.5px solid #ddd;">
-            <tr>
+        <div class="row mb-5">
+            <div class="col-12">
+                <table class="ui inverted table table-striped mt-4" style="border: 0.5px solid #ddd;">
+                    <tr>
 
-                <th class="text-center">Assignment Name</th>
-                <th class="text-center">Description</th>
-                <th class="text-center">File</th>
-                <th class="text-center">Submission</th>
-            </tr>
-            <tr *ngFor="let classwork of allClassworks">
-                <td align="center">{{classwork.assignmentname}}</td>
-                <td align="center">{{classwork.description}}</td>
-                <td align="center">
-                    <a class=" text-white" (click)="makeFile(classwork.file, classwork.filename)"
-                        style="color: white;">{{classwork.filename}}</a>
-                </td>
+                        <th>Assignment Name</th>
+                        <th>Description</th>
+                        <th>File</th>
+                        <th>Submission</th>
+                    </tr>
+                    <tr *ngFor="let classwork of allClassworks">
+                        <td align="center">{{classwork.assignmentname}}</td>
+                        <td align="center">{{classwork.description}}</td>
+                        <td align="center">
+                            <a class=" text-white" (click)="makeFile(classwork.file, classwork.filename)"
+                                style="color: white;">{{classwork.filename}}</a>
+                        </td>
 
-                <td class="nav-item" align="center" *ngIf="user.profession==='Teacher'">
-                    <a href="" data-toggle="modal" [attr.data-target]="'#assignment'+classwork._id">
-                        <button class="btn btn-outline-secondary btn-sm student-assignments"
-                            data-assignmentID="assignment1">{{classwork.students.length}} students</button>
+                        <td class="nav-item" align="center" *ngIf="user.profession==='Teacher'">
+                            <a href="" data-toggle="modal" [attr.data-target]="'#assignment'+classwork._id">
+                                <button class="btn btn-outline-secondary btn-sm student-assignments"
+                                    data-assignmentID="assignment1">{{classwork.students.length}} students</button>
 
-                    </a>
-                    <i class="trash alternate outline icon float-right text-danger" style="cursor: pointer;"
-                        (click)="deleteAssignment(classwork._id)"></i>
-
-
-
-                    <!-- Modal -->
-                    <div class="modal fade" [attr.id]="'assignment'+classwork._id" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered student_submission-modal" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="text-info">Total Submission: 1</h4>
-                                </div>
-                                <div class="modal-body lead" style="color: black;">
-                                    <table class="table table-striped table-primary mt-4">
-                                        <tr>
-                                            <th class="text-center">Student Name</th>
-                                            <th class="text-center">Student Id</th>
-                                            <th class="text-center">Student Assignment</th>
-                                            <th class="text-center">Submitted On</th>
-                                        </tr>
-                                        <tr *ngFor="let assignment of classwork.submitted">
-                                            <td align="center">{{assignment.studentname}}</td>
-                                            <td align="center">{{assignment.id}}</td>
-                                            <td align="center">
-                                                <a class=" text-white"
-                                                    (click)="makeFile(classwork.file, classwork.filename)"
-                                                    style="color: white;">{{assignment.fileName}}</a>
-                                            </td>
-                                            <td align="center">{{assignment.date}}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </td>
+                            </a>
+                            <i class="trash alternate outline icon float-right text-danger" style="cursor: pointer;"
+                                (click)="deleteAssignment(classwork._id)"></i>
 
 
-                <td class="nav-item" align="center" *ngIf="user.profession==='Student'">
 
-                    <button class="btn btn-secondary" data-assignmentID="" data-toggle="modal"
-                        [attr.data-target]="'#assignment'+classwork._id" style="width: 200px">Submit
-                        Assignment</button>
-
-                    <div class="modal fade" [attr.id]="'assignment'+classwork._id" tabindex="-1">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="createClassLabel">Assign Your Work</h5>
-                                    <span class="close" data-dismiss="modal">&times;</span>
-                                </div>
-                                <div class="body">
-                                    {{assignmentSubmittingStatus}}
-                                    <app-success
-                                        [message]="assignmentSubmittingStatus ? assignmentSubmittingStatus : ''">
-                                    </app-success>
-
-                                    <app-errors [message]="failedSubmission"></app-errors>
-
-                                    <form class="p-3" [formGroup]="submitAssignment" #submitAssignmentForm>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="assignmentsubmission"
-                                                value="Assignment Submission" disabled>
+                            <!-- Modal -->
+                            <div class="modal fade" [attr.id]="'assignment'+classwork._id" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered student_submission-modal"
+                                    role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="text-info">Total Submission: 1</h4>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="assignmentname">Assignment Name</label>
-                                            <input type="text" class="form-control" name="assignmentname"
-                                                placeholder="Assignment Name" required>
+                                        <div class="modal-body lead" style="color: black;">
+                                            <table class="ui inverted table table-striped mt-4">
+                                                <tr>
+                                                    <th>Student Name</th>
+                                                    <th>Student Id</th>
+                                                    <th>Student Assignment</th>
+                                                    <th>Submitted On</th>
+                                                </tr>
+                                                <tr *ngFor="let assignment of classwork.submitted">
+                                                    <td align="center">{{assignment.studentname}}</td>
+                                                    <td align="center">{{assignment.id}}</td>
+                                                    <td align="center">
+                                                        <a class=" text-white"
+                                                            (click)="makeFile(assignment.file, assignment.fileName)"
+                                                            style="color: white;">{{assignment.fileName}}</a>
+                                                    </td>
+                                                    <td align="center">{{assignment.date}}</td>
+                                                </tr>
+                                            </table>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="details">Details</label>
-                                            <input type="text" class="form-control" name="details"
-                                                placeholder="Description">
-                                        </div>
-                                        <div class="form-group form__file-upload">
-                                            <input type="file" class="form-control" id="photo" accept=".pdf, .zip, .cpp"
-                                                name="file" (change)="fileUpload($event)" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary"
-                                            (click)="assignmentSubmission(submitAssignmentForm, classwork._id)">Submit</button>
-                                    </form>
-
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </td>
 
-                    </div>
-                </td>
-            </tr>
-        </table>
+
+                        <td class="nav-item" align="center" *ngIf="user.profession==='Student'">
+
+                            <button class="btn btn-secondary" data-assignmentID="" data-toggle="modal"
+                                [attr.data-target]="'#assignment'+classwork._id" style="width: 200px">Submit
+                                Assignment</button>
+
+                            <div class="modal fade" [attr.id]="'assignment'+classwork._id" tabindex="-1">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="createClassLabel">Assign Your Work</h5>
+                                            <span class="close" data-dismiss="modal">&times;</span>
+                                        </div>
+                                        <div class="body">
+                                            {{assignmentSubmittingStatus}}
+                                            <app-success
+                                                [message]="assignmentSubmittingStatus ? assignmentSubmittingStatus : ''">
+                                            </app-success>
+
+                                            <app-errors [message]="failedSubmission"></app-errors>
+
+                                            <form class="p-3" [formGroup]="submitAssignment" #submitAssignmentForm>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="assignmentsubmission"
+                                                        value="Assignment Submission" disabled>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="assignmentname">Assignment Name</label>
+                                                    <input type="text" class="form-control" name="assignmentname"
+                                                        placeholder="Assignment Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="details">Details</label>
+                                                    <input type="text" class="form-control" name="details"
+                                                        placeholder="Description">
+                                                </div>
+                                                <div class="form-group form__file-upload">
+                                                    <input type="file" class="form-control" id="photo"
+                                                        accept=".pdf, .zip, .cpp" name="file"
+                                                        (change)="fileUpload($event)" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary"
+                                                    (click)="assignmentSubmission(submitAssignmentForm, classwork._id)">Submit</button>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
     </ng-container>
 </div>

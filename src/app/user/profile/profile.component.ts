@@ -81,6 +81,9 @@ export class ProfileComponent implements OnInit {
 
         this.department = this.userForm['department']
         this.loading = false
+        this.userForm.disable();
+        this.passwordForm.disable();
+
       }, err => {
         console.log(err)
       })
@@ -123,6 +126,9 @@ export class ProfileComponent implements OnInit {
         localStorage.setItem('lu-user', user);
         this.updateMessage = "Profile Updated";
         this.updating = false;
+        document.querySelectorAll('button').forEach(e => {
+          e.disabled = false;
+        })
         setTimeout(() => {
           this.updateMessage = ''
 
@@ -174,9 +180,7 @@ export class ProfileComponent implements OnInit {
 
 
   showPass(id) {
-    console.log(id, 'di')
     let dom: HTMLInputElement = document.querySelector(`#${id}`);
-    console.log(dom.type)
 
     if (dom.type === 'password') {
       dom.type = 'text'
@@ -189,14 +193,40 @@ export class ProfileComponent implements OnInit {
 
 
   openNav() {
-    document.getElementById('openbtn').style.visibility = "hidden"
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
+    // document.getElementById('openbtn').style.visibility = "hidden"
+    if (document.getElementById("mySidebar").style.width != '250px') {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+    else {
+      this.closeNav();
+    }
   }
 
   closeNav() {
-    document.getElementById('openbtn').style.visibility = "visible"
+    // document.getElementById('openbtn').style.visibility = "visible"
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
+  }
+
+  enableInputs() {
+    let elem: HTMLInputElement = document.querySelector('input[type=file]');
+    if (this.userForm.enabled) {
+      this.userForm.disable();
+      this.passwordForm.disable();
+      document.querySelectorAll('button').forEach(e => {
+        e.disabled = true;
+      })
+      elem.disabled = true;
+    } else {
+      this.userForm.enable();
+      this.passwordForm.enable();
+      document.querySelectorAll('button').forEach(e => {
+        e.disabled = false;
+      });
+
+      elem.disabled = false;
+    }
+
   }
 }

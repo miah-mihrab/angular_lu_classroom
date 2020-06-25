@@ -105,7 +105,8 @@ export class ClassorkComponent implements OnInit {
 
   makeFile(b64Data, name) {
 
-    const linkSource = 'data:application/pdf;base64,' + b64Data;
+    console.log(b64Data, name)
+    const linkSource = `data:application/${name};base64,` + b64Data;
     const downloadLink = document.createElement("a");
     const fileName = name;
 

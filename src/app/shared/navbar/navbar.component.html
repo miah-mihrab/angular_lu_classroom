@@ -27,12 +27,15 @@
 
 
         <ul class="navbar-nav" [routerLink]="['/profile', user['_id']]">
-            <span>
-                <img class="ui mini circular image" [src]="userphoto? 
-                        'data:image/jpg;base64,'+userphoto : 'https://www.w3schools.com/howto/img_avatar.png'">
-            </span>&nbsp;
+
             <li class="nav-item">
-                <a class="nav-link">{{username}}</a>
+                <span>
+
+                    <a class="nav-link"><img class="ui mini circular image"
+                            [src]="userphoto? 
+                                                                'data:image/jpg;base64,'+userphoto : 'https://www.w3schools.com/howto/img_avatar.png'"
+                            style="display: inline-block;">&nbsp;&nbsp;{{username}}</a>
+                </span>
             </li>
         </ul>
 
