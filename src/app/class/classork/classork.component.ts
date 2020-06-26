@@ -27,6 +27,8 @@ export class ClassorkComponent implements OnInit {
   successSubmission = '';
   assignmentSubmitting: boolean = true;
   assignmentSubmittingStatus = '';
+  assignmentCreatingStatus = '';
+  assignmentCreationFailed = '';
   constructor(private aRoute: ActivatedRoute, private classService: UserClassService) { }
 
   ngOnInit(): void {
@@ -64,6 +66,7 @@ export class ClassorkComponent implements OnInit {
   }
 
   createNewClasswork() {
+    this.assignmentCreatingStatus = 'creatingAssignment'
     let classwork = this.createClasswork.value;
     classwork.file = this.file;
     classwork.author = this.user.firstname + " " + this.user.lastname
@@ -77,6 +80,7 @@ export class ClassorkComponent implements OnInit {
 
 
 
+
     if (this.user.profession === 'Teacher') {
       // classwork.profession = 'Teacher'
       formData.append('profession', 'Teacher')
@@ -87,25 +91,41 @@ export class ClassorkComponent implements OnInit {
     this.classService
       .createClasswork(formData, this.classroomId)
       .subscribe(res => {
-        console.log(res);
-        this.allClassworks.push({
-          assignmentname: res['assignmentname'],
-          description: res['details'],
-          file: res['file'][0],
-          filename: res['fileName'],
-          students: res['students'],
-          submitted: res['submitted'],
-          _id: res['_id']
-        })
+        this.assignmentCreatingStatus = '';
+        if (!res['message']) {
+          this.assignmentCreatingStatus = 'assignmentCreated'
+          this.allClassworks.push({
+            assignmentname: res['assignmentname'],
+            description: res['details'],
+            file: res['file'][0],
+            filename: res['fileName'],
+            students: res['students'],
+            submitted: res['submitted'],
+            _id: res['_id']
+          });
+          this.createClasswork.reset();
+          setTimeout(() => {
+            this.assignmentCreatingStatus = ''
+          }, 2000)
+        } else {
+
+          this.assignmentCreationFailed = res['message'] ? res['message'] : "Something went wrong";
+
+          setTimeout(() => {
+            this.assignmentCreationFailed = '';
+          })
+        }
       }, err => {
-        console.log(err)
+        this.assignmentCreationFailed = err.error.message ? err.error.message : 'Something went wrong'
+
+        setTimeout(() => {
+          this.assignmentCreationFailed = '';
+        })
       })
   }
 
 
   makeFile(b64Data, name) {
-
-    console.log(b64Data, name)
     const linkSource = `data:application/${name};base64,` + b64Data;
     const downloadLink = document.createElement("a");
     const fileName = name;
@@ -159,8 +179,6 @@ export class ClassorkComponent implements OnInit {
 
 
   deleteAssignment(id) {
-    console.log(id);
-
     for (let i = 0; i < this.allClassworks.length; i++) {
       if (this.allClassworks[i]._id === id) {
         this.allClassworks.splice(i, 1);
@@ -168,9 +186,9 @@ export class ClassorkComponent implements OnInit {
     }
 
     this.classService.deleteAssignemnt(id).subscribe(res => {
-      console.log(res)
+      // console.log(res)
     }, (err: Response) => {
-      console.log(err)
+      // console.log(err)
     })
   }
 }

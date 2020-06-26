@@ -49,3 +49,13 @@
         Your class has been deleted
     </div>
 </ng-container>
+<ng-container *ngIf="message==='creatingAssignment'">
+    <div class="alert alert-primary">
+        <i class="circle notch icon large loading"></i>Your assignment is being created. It may take 1-2 minutes
+    </div>
+</ng-container>
+<ng-container *ngIf="message==='assignmentCreated'">
+    <div class="alert alert-success">
+        Your assignment has been created
+    </div>
+</ng-container>

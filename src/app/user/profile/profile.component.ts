@@ -49,7 +49,6 @@ export class ProfileComponent implements OnInit {
     private location: Location,
     private router: Router) {
     this.router.events.subscribe(() => {
-      console.log(this.location.path().includes('result'))
       if (this.location.path().includes('result') || this.location.path().includes('routine')) {
         this.showResult = true;
       } else {
@@ -156,7 +155,6 @@ export class ProfileComponent implements OnInit {
 
   updatePassword() {
     this.updatingPass = !this.updatingPass
-    console.log(this.passwordForm.value)
     this.profileService.updatePassword(this.id, this.passwordForm.value).subscribe(res => {
       if (res['error']) {
         this.updateErrorMessage = res['error']
@@ -170,7 +168,6 @@ export class ProfileComponent implements OnInit {
       }, 2000)
       this.updatingPass = !this.updatingPass
     }, (err: Response) => {
-      console.log(err, "ERRORRRR")
       this.updateErrorMessage = err['message'];
       setTimeout(() => {
         this.updateErrorMessage = ''
@@ -187,7 +184,6 @@ export class ProfileComponent implements OnInit {
     } else {
       dom.type = 'password'
     }
-    console.log(dom.type)
   }
 
 
@@ -214,16 +210,10 @@ export class ProfileComponent implements OnInit {
     if (this.userForm.enabled) {
       this.userForm.disable();
       this.passwordForm.disable();
-      document.querySelectorAll('button').forEach(e => {
-        e.disabled = true;
-      })
       elem.disabled = true;
     } else {
       this.userForm.enable();
       this.passwordForm.enable();
-      document.querySelectorAll('button').forEach(e => {
-        e.disabled = false;
-      });
 
       elem.disabled = false;
     }

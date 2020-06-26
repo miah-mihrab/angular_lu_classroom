@@ -8,15 +8,6 @@
     </div>
 </ng-container>
 
-<div class="container" *ngIf="updateMessage!=''">
-    <div class="alert alert-success">{{updateMessage}}</div>
-</div>
-<div class="container" *ngIf="updateErrorMessage!=''">
-    <div class="alert alert-danger">{{updateErrorMessage}}</div>
-</div>
-
-
-
 
 
 <div id="mySidebar" class="sidebar" style="margin-top: 20px;">
@@ -72,13 +63,19 @@
         <p style="width: 10%; float: left;">☰</p>
         <p style="width: 90%;" class="text-center">Account Settings</p>
     </div>
-    <div class="container" style="width: 60%;" *ngIf="!showResult">
+    <div class="container" style="width: 60%; margin-top: 80px;" *ngIf="!showResult">
+        <div class="container" *ngIf="updateMessage!=''">
+            <div class="alert alert-success">{{updateMessage}}</div>
+        </div>
+        <div class="container" *ngIf="updateErrorMessage!=''">
+            <div class="alert alert-danger">{{updateErrorMessage}}</div>
+        </div>
 
 
         <!-- <h1 class="heading-secondary text-center mt-4">Account Settings</h1> -->
 
         <ng-container *ngIf="!loading">
-            <div class="personal__info">
+            <div class="personal__info" style="margin-top: 40px;">
                 <div class="overview_section mb-4">
                     <h4>Basic Information</h4>
                     <br><br>
@@ -136,7 +133,8 @@
 
                         <input type="file" (change)="imageChange($event)" disabled>
                         <ng-container *ngIf='!updating'>
-                            <button class="ui inverted green button float-right" (click)="updateUser()">Update</button>
+                            <button class="ui inverted green button float-right" (click)="updateUser()"
+                                [disabled]="userForm.disabled">Update</button>
                         </ng-container>
                         <ng-container *ngIf='updating'>
                             <button class="ui inverted green loading button float-right">Loading</button>
@@ -213,7 +211,8 @@
                         </div>
 
                         <ng-container *ngIf='!updatingPass'>
-                            <button class="ui inverted green button float-right" (click)="updatePassword()">Update
+                            <button class="ui inverted green button float-right" (click)="updatePassword()"
+                                [disabled]="passwordForm.disabled">Update
                                 Password</button>
                         </ng-container>
                         <ng-container *ngIf='updatingPass'>

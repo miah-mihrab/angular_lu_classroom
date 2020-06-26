@@ -68,7 +68,6 @@ export class HomeComponent implements OnInit {
     this.homeService
       .createClass(this.createClassForm.value)
       .subscribe((res) => {
-        console.log(res)
         this.classes.push(res)
         this.confirmation = 'createdClass';
 
@@ -77,7 +76,6 @@ export class HomeComponent implements OnInit {
         }, 2000)
 
       }, err => {
-        console.log(err);
         this.failedInClassService = 'Something went wrong while creating the class.';
         setTimeout(() => {
           this.failedInClassService = ''
@@ -87,10 +85,8 @@ export class HomeComponent implements OnInit {
   }
   joinClass() {
     this.confirmation = 'joiningClass';
-    console.log(this.joinClassForm.value, this.user._id)
     this.homeService.joinClass(this.joinClassForm.value, this.user._id).subscribe(res => {
       if (res['success'] != false) {
-        console.log(res, "CLASS RESPONSE")
         this.confirmation = 'joinedToClass';
         setTimeout(() => {
           this.confirmation = ''
@@ -106,7 +102,6 @@ export class HomeComponent implements OnInit {
       }
 
     }, err => {
-      console.log(err)
       this.confirmation = ''
 
       this.failedInClassService = 'Something went wrong while joining you to the class. Please check the room ID';
@@ -118,7 +113,6 @@ export class HomeComponent implements OnInit {
 
   deleteClass(classId) {
     this.classDeleteId = classId;
-    console.log(this.classDeleteId)
 
   }
 

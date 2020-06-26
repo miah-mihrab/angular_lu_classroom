@@ -99,12 +99,11 @@
 }
 
 .alert {
-    position: fixed;
-    top: 0;
+    top:0;
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
-    z-index: 9999;
+    z-index: 999999999999 !important;
     color: #fff;
     font-size: 1.3rem;
     font-weight: 400;

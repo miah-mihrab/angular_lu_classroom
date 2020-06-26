@@ -1,6 +1,9 @@
 <div class="container">
     <div class="col-12" *ngIf="user.profession==='Teacher'">
         <h3 class="text-secondary">Assign Work</h3>
+
+        <app-success [message]="assignmentCreatingStatus"></app-success>
+        <app-errors [message]="assignmentCreationFailed"></app-errors>
         <hr>
         <form class="ui form" style="margin-top: 15px;" id="classwork_form" [formGroup]="createClasswork">
             <div class="field">
