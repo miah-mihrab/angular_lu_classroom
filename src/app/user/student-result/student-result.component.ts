@@ -53,15 +53,16 @@ export class StudentResultComponent implements OnInit {
             let years = Object.keys(results.results);
             years = years.reverse();
             let k = 1;
-            years.forEach(e => {
-              let index = Object.keys(results.results[e])
+            years.forEach(year => {
+              let index = Object.keys(results.results[year]).reverse()
+              // console.log(index, year)
               k++;
-              index.forEach(et => {
-                if (k <= 3) {
-                  for (let i = 0; i < et.length; i++) {
-                    if (((results.results[e])[et]).courses != null)
-                      three_sem_result.push((results.results[e])[et]);
-                  }
+              // console.log(results.results[year][index[0]])
+
+              index.forEach(ind => {
+                // console.log(ind);
+                for (let i = 0; i < ind.length; i++) {
+                  three_sem_result.push((results.results[year])[ind]);
                 }
               });
             });
