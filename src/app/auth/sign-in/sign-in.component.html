@@ -41,7 +41,8 @@
                 <button type="submit" class="btn btn-primary" (click)="signIn()">Login</button>
 
                 <div class="forgot pt-3">
-                    <a href="">Forgot password?</a><br>
+                    <a [routerLink]="['../forgot-password']" routerLinkActive="router-link-active">Forgot
+                        password?</a><br>
                     <a [routerLink]="['/user/signup']">No account? Create one</a>
                 </div>
             </form>

@@ -39,11 +39,9 @@ export class ClasroomComponent implements OnInit {
   ngOnInit(): void {
     this.user = JSON.parse(atob(localStorage.getItem('lu-user')))
     this.userphoto = this.user.photo;
-    console.log(this.user)
     this.aRoute.params.subscribe(param => {
       this.id = param.id
       this.classService.getClass(this.id).subscribe(res => {
-        console.log(res, "RESULT")
         localStorage.setItem('lu_current_classroom', res['classID'])
         this.classContent = res;
         this.classPosts = this.classContent.ClassPosts;
@@ -52,7 +50,6 @@ export class ClasroomComponent implements OnInit {
           let allComments = document.querySelectorAll('.cmnts');
           this.loading = false;
           allComments.forEach(e => {
-            console.log('here')
             e.scrollTop = e.scrollHeight - e.clientHeight;
           })
 

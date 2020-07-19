@@ -1,0 +1,69 @@
+<ng-container *ngIf="!tokenValid">
+    <div class="container">
+        <h2 class="text-center p-3">Token may expired</h2>
+        <button class="btn btn-primary" [routerLink]="['../../forgot-password']"
+            routerLinkActive="router-link-active">Request
+            again</button><br>
+        <p class="text-center">or</p>
+        <button class="btn btn-success" [routerLink]="['../../signin']"
+            routerLinkActive="router-link-active">Signin</button>
+    </div>
+
+</ng-container>
+<ng-container *ngIf="tokenValid">
+    <div class="cont mt-5" style="width: 400px; margin: auto;">
+        <h2 style="color: rgb(228, 204, 204); font-weight: 300;">Reset Password</h2>
+        <app-success [message]="responseMessage"></app-success>
+        <app-errors [message]="errorMessage"></app-errors>
+        <form [formGroup]="resetPassword">
+            <div class="form-group row">
+                <div class="col-12">
+                    <label for="password" class="form__label">Password</label>
+                    <div class="input-group mb-3">
+                        <input type="password" id="password" class="form-control" placeholder="********" name="password"
+                            id="pass" formControlName="password">
+                        <div class="input-group-append" (click)="showPass('pass')">
+                            <span class="input-group-text"><i class="eye slash icon"></i></span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="resetPassword.get('password').invalid && (resetPassword.get('password').dirty || resetPassword.get('password').touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="resetPassword.get('password').errors.required">
+                            * Password is required.
+                        </div>
+                        <div *ngIf="resetPassword.get('password').errors.pattern">
+                            * Password must be combination of uppercase and lowercase letters, numbers
+                            and
+                            special
+                            characters and min length is six
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label for="confirmPassword" class="form__label">Confirm Password</label>
+                    <div class="input-group mb-3">
+                        <input type="password" id="confirm_password" class="form-control" placeholder="********"
+                            name="confirm_password" id="confirm_pass" formControlName="confirm_password">
+                        <div class="input-group-append" (click)="showPass('confirm_pass')">
+                            <span class="input-group-text"><i class="eye slash icon"></i></span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="resetPassword.get('confirm_password').invalid && (resetPassword.get('confirm_password').touched || resetPassword.get('confirm_password').dirty)"
+                        class="alert alert-danger">
+                        * Password confirmation is required
+                    </div>
+
+                    <div *ngIf="resetPassword.get('confirm_password').valid && resetPassword.invalid && resetPassword.errors?resetPassword.errors.mismatch:null"
+                        class="alert alert-danger">
+                        * Password should match
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-success" style="width:100%;" (click)="resetPassFunc()">Reset</button>
+        </form>
+    </div>
+
+</ng-container>

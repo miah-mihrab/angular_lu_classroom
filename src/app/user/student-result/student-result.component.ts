@@ -76,7 +76,6 @@ export class StudentResultComponent implements OnInit {
 
     }
     get_sem(cb => {
-      console.log(cb)
       this.fetchingResult = false;
       if (!cb.error) {
         this.student = cb.student;

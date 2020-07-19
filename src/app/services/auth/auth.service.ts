@@ -14,4 +14,16 @@ export class AuthService {
   signup(infos) {
     return this.http.post('https://lu-classroom.herokuapp.com/registration', infos)
   }
+
+  forgotPassword(email: any) {
+    console.log(email)
+    return this.http.post('http://localhost:5000/forgot-password', { email })
+  }
+
+  resetTokenValidation(token) {
+    return this.http.post('http://localhost:5000/validate-reset-token', { token });
+  }
+  resetPassword(password: any, email: any) {
+    return this.http.patch('http://localhost:5000/reset-password', { password, email })
+  }
 }

@@ -113,7 +113,7 @@ export class ClassorkComponent implements OnInit {
 
           setTimeout(() => {
             this.assignmentCreationFailed = '';
-          })
+          }, 2000)
         }
       }, err => {
         this.assignmentCreationFailed = err.error.message ? err.error.message : 'Something went wrong'
