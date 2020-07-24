@@ -17,13 +17,13 @@ export class AuthService {
 
   forgotPassword(email: any) {
     console.log(email)
-    return this.http.post('http://localhost:5000/forgot-password', { email })
+    return this.http.post('https://lu-classroom.herokuapp.com/forgot-password', { email })
   }
 
   resetTokenValidation(token) {
-    return this.http.post('http://localhost:5000/validate-reset-token', { token });
+    return this.http.post('https://lu-classroom.herokuapp.com/validate-reset-token', { token });
   }
   resetPassword(password: any, email: any) {
-    return this.http.patch('http://localhost:5000/reset-password', { password, email })
+    return this.http.patch('https://lu-classroom.herokuapp.com/reset-password', { password, email })
   }
 }

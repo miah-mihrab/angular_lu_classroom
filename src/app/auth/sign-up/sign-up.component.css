@@ -1,35 +1,37 @@
 .container-fluid{
-    /* background-image: url('../../../assets/images/lu-theme.svg'); */
+    background-image: url("./../../../assets/images/bg.png");
+
     background-size: cover;
-    background-position: center;
-    position: relative;
+    background-position:center;
     top: 0;
     left: 0;
     height: 100%;
 }
-.col-lg-7 img{
-    width:65%; position: fixed; bottom:0; left: 0;
-}
-.logo{
-    padding: 20px;
-}
-.logo img{
-    /* background-image: url('../../../assets/images/lu-logo-2.png'); */
-    transform: translateX(50%)!important;
-    width: 50%; 
-    margin: auto; 
+
+.lead-text{
+      font-size: 32px;
+  background: -webkit-linear-gradient(#e9843d, #f8ece4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-@media screen and (min-width: 1024px){
-    .col-7 img{
-        width: 70%;
+
+@media screen and (max-width: 1137px){
+    .container-fluid{
+        background-image: url("../../../assets/images/bg-1137.png");
     }
 }
-@media screen and (max-width: 991px){
-    .d-none-md{
-        display: none;
+
+@media screen and (max-width: 1004px){
+     .container-fluid{
+        background-image: url("../../../assets/images/medium.png");
+    } 
+    .col-md-12{
+        margin-top: 400px;
     }
 }
-@media screen and (max-width:560px){
- 
+@media screen and (max-width: 870px){
+     .container-fluid{
+        background-image: url("../../../assets/images/small.png");
+    }
 }
