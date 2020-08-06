@@ -1,11 +1,17 @@
 .container-fluid{
     background-image: url("./../../../assets/images/bg.png");
-
-    background-size: cover;
-    background-position:center;
-    top: 0;
-    left: 0;
-    height: 100%;
+   background-position: center center;
+  
+  /* Background image doesn't tile */
+  background-repeat: no-repeat !important;
+  
+  /* Background image is fixed in the viewport so that it doesn't move when 
+     the content's height is greater than the image's height */
+  background-attachment: fixed !important;
+  
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover !important;
 }
 
 .lead-text{
@@ -14,7 +20,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 
 @media screen and (max-width: 1137px){
     .container-fluid{
@@ -27,11 +32,23 @@
         background-image: url("../../../assets/images/medium.png");
     } 
     .col-md-12{
-        margin-top: 400px;
+        margin-top: 200px;
     }
 }
 @media screen and (max-width: 870px){
      .container-fluid{
+       
         background-image: url("../../../assets/images/small.png");
+    }
+    .lead-text{
+      font-size: 22px;
+    }
+}
+@media screen and (max-width: 460px){
+  .lead-text{
+      font-size: 16px;
+    }
+     .container-fluid{
+        background-image: url("../../../assets/images/x-small.png");
     }
 }

@@ -27,7 +27,7 @@
         background-image: url("../../../assets/images/medium.png");
     } 
     .col-md-12{
-        margin-top: 300px;
+        margin-top: 150px;
     }
 }
 @media screen and (max-width: 870px){
