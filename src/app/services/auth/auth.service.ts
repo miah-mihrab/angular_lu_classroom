@@ -8,6 +8,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  baseUrl = "https://lu-classroom.herokuapp.com";
   signIn(credentials) {
     return this.http.post('https://lu-classroom.herokuapp.com/signin', credentials)
   }
@@ -15,8 +16,10 @@ export class AuthService {
     return this.http.post('https://lu-classroom.herokuapp.com/registration', infos)
   }
 
+  verifyEmail(token: any) {
+    return this.http.post('https://lu-classroom.herokuapp.com/email/verification', { token })
+  }
   forgotPassword(email: any) {
-    console.log(email)
     return this.http.post('https://lu-classroom.herokuapp.com/forgot-password', { email })
   }
 

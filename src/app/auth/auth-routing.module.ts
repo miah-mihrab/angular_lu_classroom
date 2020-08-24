@@ -1,3 +1,4 @@
+import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { ResetPassComponent } from './reset-pass/reset-pass.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -18,6 +19,9 @@ const routes: Routes = [
   },
   {
     path: 'reset-password/:token', component: ResetPassComponent
+  },
+  {
+    path: 'verification/:token', component: EmailVerificationComponent
   }
 
 ];

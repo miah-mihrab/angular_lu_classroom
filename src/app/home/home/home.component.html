@@ -12,6 +12,7 @@
 
 <!-- NAVBAR -->
 <app-navbar [username]="username" [userphoto]="userphoto"></app-navbar>
+<div class="alert alert-info" *ngIf="!user.emailVerified">Please verify your email.</div>
 <ng-container *ngIf="!loading">
     <app-success [message]="confirmation"></app-success>
 

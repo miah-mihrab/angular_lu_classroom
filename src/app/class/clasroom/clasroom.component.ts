@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserClassService } from 'src/app/services/user-class/user-class.service';
 import { PostType } from '../../utils/ClassPostType'
 import { NgForm } from '@angular/forms';
+import * as io from 'socket.io-client';
+
 @Component({
   selector: 'app-clasroom',
   templateUrl: './clasroom.component.html',
@@ -21,6 +23,9 @@ export class ClasroomComponent implements OnInit {
   user: any;
   userphoto: string;
   comment: any;
+
+  //SOCKET
+  socket: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -37,6 +42,12 @@ export class ClasroomComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // SOCKET
+    this.socket = io('http://localhost:5000');
+    this.socket.on('test', data => {
+      console.log("here")
+    });
+
     this.user = JSON.parse(atob(localStorage.getItem('lu-user')))
     this.userphoto = this.user.photo;
     this.aRoute.params.subscribe(param => {

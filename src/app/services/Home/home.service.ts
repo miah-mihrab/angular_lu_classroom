@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http'
 })
 export class HomeService {
 
+  baseUrl = "https://lu-classroom.herokuapp.com";
   constructor(private http: HttpClient) { }
 
   getProfile(userId: any, profession: any) {

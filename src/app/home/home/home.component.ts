@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = JSON.parse(atob(localStorage.getItem('lu-user')));
+    console.log(this.user)
     this.username = `${this.user.firstname} ${this.user.lastname}`
     this.userphoto = this.user['photo'];
 
@@ -50,6 +51,8 @@ export class HomeComponent implements OnInit {
       .getProfile(this.user._id, this.user.profession)
       .subscribe((res) => {
         let user = res;
+        this.user['emailVerified'] = user['emailVerified'];
+        console.log(user, "USER")
         this.loading = false;
         if (user['allClass']) {
           for (let i = 0; i < user['allClass'].length; i++) {
