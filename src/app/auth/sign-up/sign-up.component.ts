@@ -18,6 +18,11 @@ export class SignUpComponent implements OnInit {
   errorMessage = ''
   signupStatus = '';
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+    if (document.querySelector('form')) {
+      document.querySelector('.ui.container').addEventListener('scroll', () => {
+        console.log("HERE")
+      })
+    }
     this.signupForm = this.fb.group({
 
       firstname: ['', [Validators.required]],
