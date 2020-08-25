@@ -97,31 +97,6 @@ export class ClassRoutineComponent implements OnInit {
         document.querySelector('.routine-div').appendChild(h3);
         let row = routineArray.length;
         let col = 4;
-        // let table = document.createElement('table');
-        // table.classList.add('table');
-
-        // let header = table.createTHead();
-        // let tr = header.insertRow(0);
-        // let th = document.createElement('th');
-        // th.classList.add('text-center')
-        // th.innerHTML = 'Day';
-        // tr.appendChild(th);
-        // th = document.createElement('th');
-        // th.classList.add('text-center')
-        // th.innerHTML = 'Duration';
-        // tr.appendChild(th);
-        // th = document.createElement('th');
-        // th.classList.add('text-center')
-        // th.innerHTML = 'Course';
-        // tr.appendChild(th);
-        // th = document.createElement('th');
-        // th.classList.add('text-center')
-        // th.innerHTML = 'Teacher';
-        // tr.appendChild(th);
-        // th = document.createElement('th');
-        // th.classList.add('text-center')
-        // th.innerHTML = 'Room';
-        // tr.appendChild(th);
 
         let weekDays = {};
         let Sun = [];
@@ -130,13 +105,12 @@ export class ClassRoutineComponent implements OnInit {
         let Wed = [];
         let Thu = [];
 
+        let maxClass = 0;
         for (let i = 0; i < routineArray.length; i++) {
 
           let stTime = new Date((routineArray[i].start));
-          console.log(routineArray[i].start)
-          // startTime = startTime.toDateString();
+
           let endTime = new Date((routineArray[i].end));
-          // endTime = endTime.toDateString();
           let startHours = stTime.getHours();
           let startMinutes = stTime.getMinutes();
 
@@ -144,24 +118,13 @@ export class ClassRoutineComponent implements OnInit {
           let endMinutes = endTime.getMinutes();
           let duration = `${startHours}:${startMinutes} - ${endHours}:${endMinutes}`
 
-          console.log(routineArray[i].title)
           let courseTitle = routineArray[i].title.toString().trim().split('by');
 
           let teacher = courseTitle[1] ? courseTitle.toString().trim().split(' in') : '';
-          // console.log(teacher)
           let startTime = stTime.toDateString();
           let day = startTime.split(' ');
 
           h3.innerHTML = "Weekly Routine"
-
-          // let tbody = table.createTBody();
-          // tr = tbody.insertRow(0);
-          // if (day[0] === 'Sun') tr.style.backgroundColor = "#cdcdcd";
-          // else if (day[0] === 'Mon') tr.style.backgroundColor = "#D3D3D3";
-          // else if (day[0] === 'Tue') tr.style.backgroundColor = "#C0C0C0";
-          // else if (day[0] === 'Wed') tr.style.backgroundColor = "#A9A9A9";
-          // else if (day[0] === 'Thu') tr.style.backgroundColor = "#808080";
-
 
           if (day[0] === 'Sun') {
             Sun.push({
@@ -209,65 +172,12 @@ export class ClassRoutineComponent implements OnInit {
             })
           }
 
-          // weekDays[day[0]].push({
-          //   day: day[0],
-          //   duration,
-          //   courseTitle: courseTitle[0],
-          //   teacher: teacher[0],
-          //   location: routineArray[0].location
-          // })
+          maxClass = Math.max(Sun.length, Mon.length, Tue.length, Wed.length, Thu.length);
 
-          // let td = tr.insertCell(0);
-          // td.innerHTML = day[0];
-          // td = tr.insertCell(1);
-          // td.innerHTML = duration
-          // td = tr.insertCell(2);
-          // td.innerHTML = courseTitle[0]
-          // td = tr.insertCell(3);
-          // td.innerHTML = teacher[0]
-          // td = tr.insertCell(4);
-          // td.innerHTML = routineArray[i].location
-          // document.querySelector('.routine-div').appendChild(table);
         }
-        console.log(weekDays);
+
         let table1 = document.createElement('table');
-        table1.classList.add('table');
-
-
-        let header = table1.createTHead();
-        let tr1 = header.insertRow(0);
-
-        let th1 = tr1.insertCell(0)
-
-        th1.classList.add('text-center')
-        th1.innerHTML = '';
-        th1 = tr1.insertCell(0)
-        tr1.appendChild(th1)
-
-        th1.classList.add('text-center')
-        th1.innerHTML = 'Sun';
-        th1 = tr1.insertCell(0)
-        tr1.appendChild(th1)
-
-        th1 = tr1.insertCell(0);
-        th1.innerHTML = 'Mon';
-        th1.classList.add('text-center')
-        tr1.appendChild(th1);
-
-        th1 = tr1.insertCell(0);
-        th1.innerHTML = 'Tue';
-        th1.classList.add('text-center')
-        tr1.appendChild(th1);
-
-        th1 = tr1.insertCell(0);
-        th1.innerHTML = 'Wed';
-        th1.classList.add('text-center')
-        tr1.appendChild(th1)
-
-        th1 = tr1.insertCell(0);
-        th1.innerHTML = 'Thurs';
-        th1.classList.add('text-center')
-        tr1.appendChild(th1)
+        table1.classList.add('table', 'table-bordered');
 
         weekDays['Sun'] = Sun;
         weekDays['Mon'] = Mon;
@@ -276,18 +186,35 @@ export class ClassRoutineComponent implements OnInit {
         weekDays['Thu'] = Thu;
 
         let dayKeys = Object.keys(weekDays);
+        let tbody = table1.createTBody()
+        for (let i = dayKeys.length - 1; i >= 0; i--) {
 
-        console.log(weekDays)
+          if (typeof weekDays[dayKeys[i]][0] != 'undefined') {
+            let tr1: any;
+            let th1: any;
+            tr1 = tbody.insertRow(0);
 
-        for (let i = 0; i < dayKeys.length; i++) {
-          for (let j = 0; j < weekDays[dayKeys[i]].length; j++) {
+            th1 = tr1.insertCell(0);
+            for (let j = maxClass; j >= 0; j--) {
 
+              if (weekDays[dayKeys[i]][j] != undefined && weekDays[dayKeys[i]][j]['day'] != undefined) {
+                let tch = (weekDays[dayKeys[i]][j]['teacher']).toString().split(',')
+                th1 = tr1.insertCell(0)
+                th1.classList.add('text-center')
+                th1.innerHTML = `${tch[0]}, <br> ${tch[1]}, <br> ${weekDays[dayKeys[i]][j]['duration']}, ${weekDays[dayKeys[i]][j]['location']}`;
+                // tr1.appendChild(th1)
+              }
+            }
+            // tr1 = tbody.insertRow(0);
+            th1 = tr1.insertCell(0)
+            th1.classList.add('text-center')
+
+            th1.innerHTML = weekDays[dayKeys[i]][0].day
           }
+          // th1.innerHTML = (typeof weekDays[dayKeys[i]][0] != 'undefined') ? weekDays[dayKeys[i]][0].day : '';
         }
 
         document.querySelector('.routine-div').appendChild(table1);
-
-
 
       } else {
         this.noRoutineFound = true;
