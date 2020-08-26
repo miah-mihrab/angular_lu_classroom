@@ -19,13 +19,16 @@ export class EmailVerificationComponent implements OnInit {
       this.authService
         .verifyEmail(param.token)
         .subscribe(res => {
+          console.log(res)
           if (res['email'] === 'verified') {
+            alert("Email Verified")
             this.router.navigate(['../user/signin'])
           } else {
             alert("Something went wrong in verification. Please try later");
             this.router.navigate(['../user/signin'])
           }
         }, (err: Response) => {
+          console.log(err)
           alert("Something went wrong in verification. Please try later");
           this.router.navigate(['../user/signin'])
         })

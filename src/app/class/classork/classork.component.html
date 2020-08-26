@@ -1,5 +1,56 @@
 <div class="container">
-    <div class="col-12" *ngIf="user.profession==='Teacher'">
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+        *ngIf="user.profession==='Teacher'">
+        Create Classwork
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Assign Classwork</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12" *ngIf="user.profession==='Teacher'">
+                        <h3 class="text-secondary">Assign Work</h3>
+
+                        <app-success [message]="assignmentCreatingStatus"></app-success>
+                        <app-errors [message]="assignmentCreationFailed"></app-errors>
+                        <hr>
+                        <form class="ui form" style="margin-top: 15px;" id="classwork_form"
+                            [formGroup]="createClasswork">
+                            <div class="field">
+                                <label for="assignment name">Assignment Name (Keep it unique)</label>
+                                <input type="text" class="form-control" name="assignmentname" id="assignmet_name"
+                                    placeholder="Assignment Name" required formControlName="assignmentname">
+                            </div>
+                            <div class="field">
+                                <label for="description">Details</label>
+                                <textarea class="form-control" name="details" id="details" rows="3"
+                                    placeholder="Description and Last Date of Submission"
+                                    formControlName="details"></textarea>
+                            </div>
+                            <div class="field">
+                                <input type="file" class="form__upload" id="photo" accept=".pdf, .zip, .cpp" name="file"
+                                    (change)="fileUpload($event)">
+                            </div>
+                            <button class="ui inverted green button" style="float: right;"
+                                (click)="createNewClasswork()">Assign</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="col-12" *ngIf="user.profession==='Teacher'">
         <h3 class="text-secondary">Assign Work</h3>
 
         <app-success [message]="assignmentCreatingStatus"></app-success>
@@ -22,7 +73,7 @@
             </div>
             <button class="ui inverted green button" (click)="createNewClasswork()">Assign</button>
         </form>
-    </div>
+    </div> -->
 </div>
 
 <div class="container">
@@ -44,7 +95,7 @@
                     </tr>
                     <tr *ngFor="let classwork of allClassworks">
                         <td align="center">{{classwork.assignmentname}}</td>
-                        <td align="center">{{classwork.description}}</td>
+                        <td align="center" style="width: 500px;">{{classwork.description}}</td>
                         <td align="center">
                             <a class=" text-white" (click)="makeFile(classwork.file, classwork.filename)"
                                 style="color: white;">{{classwork.filename}}</a>
@@ -80,10 +131,16 @@
                                                 <tr *ngFor="let assignment of classwork.submitted">
                                                     <td align="center">{{assignment.studentname}}</td>
                                                     <td align="center">{{assignment.id}}</td>
-                                                    <td align="center">
-                                                        <a class=" text-white"
-                                                            (click)="makeFile(assignment.file, assignment.fileName)"
-                                                            style="color: white;">{{assignment.fileName}}</a>
+                                                    <td align="center" style="width: 500px;">
+                                                        <ng-container *ngIf="assignment.fileName!=''">
+                                                            <a class=" text-white"
+                                                                (click)="makeFile(assignment.file, assignment.fileName)"
+                                                                style="cursor:pointer; color: white;">{{assignment.fileName}}
+                                                                a</a>
+                                                            <hr>
+                                                        </ng-container>
+
+                                                        <p>{{assignment.details}}</p>
                                                     </td>
                                                     <td align="center">{{assignment.date}}</td>
                                                 </tr>
@@ -128,8 +185,10 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="details">Details</label>
-                                                    <input type="text" class="form-control" name="details"
-                                                        placeholder="Description">
+                                                    <textarea class="form-control" name="details" rows="3"
+                                                        placeholder="Description and Last Date of Submission"
+                                                        formControlName="description"></textarea>
+
                                                 </div>
                                                 <div class="form-group form__file-upload">
                                                     <input type="file" class="form-control" id="photo"

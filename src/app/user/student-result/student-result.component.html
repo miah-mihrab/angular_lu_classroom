@@ -39,7 +39,7 @@
     <div class="container" *ngIf="student['name']" style="margin-top: 100px;">
         <div style="overflow:hidden">
             <div class="profile-img float-lg-left float-md-none ">
-                <div class="rounded mt-3" style="width: 150px; height: 150px;">
+                <div class="rounded mt-3" style="width: 150px; height: 150px; object-fit: contain;">
                     <!-- data:image/jpg;base64,{{userPhoto}} -->
                     <img [src]="'data:image/jpg;base64,'+user.photo" name="aboutme" class="rounded"
                         style="width: 100%; height:100%">

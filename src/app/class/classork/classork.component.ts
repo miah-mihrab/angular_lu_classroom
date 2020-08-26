@@ -44,8 +44,8 @@ export class ClassorkComponent implements OnInit {
           this.allClassworks.push({
             assignmentname: classwork.assignmentname,
             description: classwork.details,
-            file: classwork.file[0],
-            filename: classwork.fileName,
+            file: classwork.file ? classwork.file[0] : '',
+            filename: classwork.fileName ? classwork.fileName : '',
             students: classwork.students,
             submitted: classwork.submitted,
             _id: classwork['_id']
@@ -55,10 +55,6 @@ export class ClassorkComponent implements OnInit {
       }, (err: Response) => {
         console.log(err)
       })
-    // this.aRoute.params.subscribe(param => {
-    //   this.classroomId = param.id;
-    //   console.log(param)
-    // })
   }
 
   fileUpload(event) {
@@ -97,8 +93,8 @@ export class ClassorkComponent implements OnInit {
           this.allClassworks.push({
             assignmentname: res['assignmentname'],
             description: res['details'],
-            file: res['file'][0],
-            filename: res['fileName'],
+            file: res['file'] ? res['file'][0] : "",
+            filename: res['fileName'] ? res['fileName'] : "",
             students: res['students'],
             submitted: res['submitted'],
             _id: res['_id']
@@ -145,7 +141,7 @@ export class ClassorkComponent implements OnInit {
 
     formData.append('name', this.user.firstname + " " + this.user.lastname)
     formData.append('studentId', this.user.id)
-    formData.append('details', assignment.details)
+    formData.append('details', assignment.description)
     formData.append('assignmentname', assignment.name)
     formData.append('assignmentId', assignmentId)
     formData.append('userId', this.user._id)
@@ -173,8 +169,6 @@ export class ClassorkComponent implements OnInit {
       })
 
     form.reset();
-    // formData.append('assignmentname', classwork.assignmentname);
-    // formData.append('details', classwork.details)
   }
 
 
@@ -186,9 +180,9 @@ export class ClassorkComponent implements OnInit {
     }
 
     this.classService.deleteAssignemnt(id).subscribe(res => {
-      // console.log(res)
+
     }, (err: Response) => {
-      // console.log(err)
+      console.log(err)
     })
   }
 }

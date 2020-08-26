@@ -21,7 +21,7 @@ export class UserClassService {
 
   createClasswork(classwork, classroomId) {
     console.log(classwork, classroomId)
-    return this.http.post(`http://localhost:5000/classroom/${classroomId}/classwork`, classwork)
+    return this.http.post(`https://lu-classroom.herokuapp.com/classroom/${classroomId}/classwork`, classwork)
   }
   getClassworks(classroomId) {
     return this.http.get(`https://lu-classroom.herokuapp.com/classroom/${classroomId}/classwork`)
@@ -33,7 +33,7 @@ export class UserClassService {
 
   // STUDENT
   submitAssignment(assignment, classroomId) {
-    return this.http.post(`https://lu-classroom.herokuapp.com/classroom/${classroomId}/classwork`, assignment)
+    return this.http.post(`http://localhost:5000/classroom/${classroomId}/classwork`, assignment)
   }
 
 }

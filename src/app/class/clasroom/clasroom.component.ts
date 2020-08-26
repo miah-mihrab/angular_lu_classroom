@@ -24,8 +24,6 @@ export class ClasroomComponent implements OnInit {
   userphoto: string;
   comment: any;
 
-  //SOCKET
-  socket: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -42,11 +40,6 @@ export class ClasroomComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // SOCKET
-    this.socket = io('http://localhost:5000');
-    this.socket.on('test', data => {
-      console.log("here")
-    });
 
     this.user = JSON.parse(atob(localStorage.getItem('lu-user')))
     this.userphoto = this.user.photo;
