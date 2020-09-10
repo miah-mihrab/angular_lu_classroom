@@ -33,7 +33,7 @@ export class StudentResultComponent implements OnInit {
 
     this.fetchingResult = true;
     async function get_sem(cb) {
-      let three_sem_result = [];
+      let sem_result = [];
       let data = `action=get-result&student_id=${id}&birth_date=${birth_date}`
       let xhr = new XMLHttpRequest();
       xhr.open('post', 'https://www.lus.ac.bd/wp-admin/admin-ajax.php', true);
@@ -51,23 +51,20 @@ export class StudentResultComponent implements OnInit {
             // console.log(student)
 
             let years = Object.keys(results.results);
-            years = years.reverse();
+            // years = years.reverse();
             let k = 1;
             years.forEach(year => {
               let index = Object.keys(results.results[year]).reverse()
-              // console.log(index, year)
               k++;
-              // console.log(results.results[year][index[0]])
 
               index.forEach(ind => {
-                // console.log(ind);
                 for (let i = 0; i < ind.length; i++) {
-                  three_sem_result.push((results.results[year])[ind]);
+                  sem_result.push((results.results[year])[ind]);
                 }
               });
             });
           }
-          return cb({ result: three_sem_result, student: student });
+          return cb({ result: sem_result, student: student });
         } catch (err) {
           return cb({ error: "Something went wrong while fetching. Please check your network connection or try again later." });
         }

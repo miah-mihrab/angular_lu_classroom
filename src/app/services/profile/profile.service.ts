@@ -10,13 +10,13 @@ export class ProfileService {
 
 
   getProfile(id) {
-    return this.http.get(`https://lu-classroom.herokuapp.com/profile/${id}`)
+    return this.http.get(`http://localhost:5000/profile/${id}`)
   }
   updateUser(id, formVal) {
-    return this.http.patch<any>(`https://lu-classroom.herokuapp.com/profile/${id}`, formVal)
+    return this.http.patch<any>(`http://localhost:5000/profile/${id}`, formVal)
   }
 
   updatePassword(id, formVal) {
-    return this.http.patch(`https://lu-classroom.herokuapp.com/profile/update-password/${id}`, formVal)
+    return this.http.patch(`http://localhost:5000/profile/update-password/${id}`, formVal)
   }
 }

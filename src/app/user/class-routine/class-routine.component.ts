@@ -55,7 +55,7 @@ export class ClassRoutineComponent implements OnInit {
     if (this.section != null && this.section != "" && this.section.length > 0) {
       sem_sect = `${this.semester}+(${this.section.toUpperCase()})`
     } else {
-      sem_sect = this.semester.trim();
+      sem_sect = this.semester ? this.semester.trim() : '';
     }
 
     async function getRoutine(cb) {
@@ -198,7 +198,7 @@ export class ClassRoutineComponent implements OnInit {
             for (let j = maxClass; j >= 0; j--) {
 
               if (weekDays[dayKeys[i]][j] != undefined && weekDays[dayKeys[i]][j]['day'] != undefined) {
-                let tch = (weekDays[dayKeys[i]][j]['teacher']).toString().split(',')
+                let tch = weekDays[dayKeys[i]][j]['teacher'] ? (weekDays[dayKeys[i]][j]['teacher']).toString().split(',') : '';
                 th1 = tr1.insertCell(0)
                 th1.classList.add('text-center')
                 th1.innerHTML = `${tch[0]}, <br> ${tch[1]}, <br> ${weekDays[dayKeys[i]][j]['duration']}, ${weekDays[dayKeys[i]][j]['location']}`;
